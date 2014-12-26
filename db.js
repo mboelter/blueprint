@@ -3,7 +3,8 @@ var fs = require('fs'),
 
 var DB = function(name) {
   this._name = name;
-  this._filename = 'db/' + name + '.json';
+  this._path = 'bp-content/db/'
+  this._filename = this._path + '/' + name + '.json';
   this._collection = [];
   
   if (!fs.existsSync(this._filename)) {
@@ -19,6 +20,9 @@ var DB = function(name) {
 
 DB.prototype = {
   _initDB: function() {
+    if (!fs.existsSync(this._path)) {
+      fs.mkdirSync(this._path)
+    }
     fs.writeFileSync(this._filename, JSON.stringify([]), 'utf8');    
   },
   

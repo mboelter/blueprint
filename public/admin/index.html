@@ -377,7 +377,7 @@
 
 <template id="tmpl-image-grid-item">
   <div class="image-grid-item">
-    <img src="../[%= image.uri %]">
+    <img src="[%= image.uri %]">
     <span class="remove">X</span>
   </div>
 </template>
@@ -387,7 +387,7 @@
   <div>
     [% images.forEach(function(image) { %]
       <div class="image-grid-item" data-grid-item-id="[%= image._id %]">
-        <img src="../[%= image.uri %]">
+        <img src="[%= image.uri %]">
       </div>
     [% }); %]
   </div>

@@ -7,13 +7,17 @@ exports.create = function(req, res) {
 
   req.pipe(req.busboy);
   req.busboy.on('file', function (fieldname, file, filename) {
-    var path = __dirname + '/../public/images/' + filename;
+    if (!fs.existsSync(__dirname + '/../bp-content/images')) {
+      fs.mkdirSync(__dirname + '/../bp-content/images')
+    }
+
+    var path = __dirname + '/../bp-content/images/' + filename;
     
     while(fs.existsSync(path)) {
       var arr = filename.split('.');
       arr[arr.length - 2] = arr[arr.length - 2] + '_';
       filename = arr.join('.');
-      path = __dirname + '/../public/images/' + filename;
+      path = __dirname + '/../bp-content/images/' + filename;
     }
 
 
@@ -44,7 +48,7 @@ exports.json_one_by_id = function(req, res) {
 
 exports.json_delete_by_id = function(req, res) {
   var img = Image.findById(req.params.image_id),
-      path = __dirname + '/../public/' + img.uri;
+      path = __dirname + '/../bp-content/' + img.uri;
   fs.unlinkSync(path);
   Image.delete(req.params.image_id);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify({}) }); 

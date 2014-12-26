@@ -12,7 +12,10 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(busboy()); 
 app.use(partials());
+
+app.use("/admin/images", express.static(__dirname + "/bp-content/images"));
 app.use(express.static(__dirname + '/public'));
+
 
 app.get('/json/entities', EntityAdminController.json_all);
 app.get('/json/entity/:id', EntityAdminController.json_one_by_id);
