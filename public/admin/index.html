@@ -1,0 +1,434 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        background-color: #eee;
+        margin-bottom: 100px;
+        font-family: sans-serif;
+      }
+      
+      .container {
+        margin-left: 250px;
+        margin-right: 100px;
+        margin-top: 50px;
+        background-color: white;
+        min-height: 100%;
+        box-shadow: 2px 5px 10px 0px #999;
+        padding: 20px;
+        padding-right: 150px;
+      }
+      
+      h1, h2, h3 {
+        font-weight: normal;
+      }
+      
+      
+      .small {
+        font-size: 0.8em;
+      }
+      
+      fieldset {
+        border: 0;
+        margin-left: 0;
+        padding-left: 0;
+      }
+      
+      label {
+        display: block;
+        margin-top: 10px;
+        color: #bfbfbf;
+      }
+      
+      input[type="text"] {
+        padding: 10px;
+        min-width: 100%;
+        font-size: 1em;
+        border: 1px solid #bfbfbf;
+      }
+      
+      textarea {
+        padding: 10px;
+        min-width: 100%;
+        font-size: 0.8em;
+        line-height: 1.5em;
+        border: 1px solid #bfbfbf;
+        font-family: serif;
+        min-height: 200px;
+      }
+      
+      button[type="submit"] {
+        font-size: 1em;
+        background-color: white;
+        border: 1px solid black;
+        font-weight: bold;
+      }
+      
+      .right {
+        float: right;
+      }
+      
+      .pointer {
+        cursor: pointer;
+      }
+      
+      #sidebar {
+        float: left;
+      }
+      
+      #sidebar > ul {
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
+      
+      #sidebar > ul li {
+        list-style: none;
+        padding: 0;
+        border: 0;
+        margin: 0;
+        line-height: 2em;
+      }
+      
+      #sidebar > ul ul {
+        margin-left: 20px;
+        padding: 0;
+      }
+
+      #sidebar > ul li {
+        margin-left: 0;
+        padding: 0;
+      }
+
+      #sidebar > ul > li {
+        margin-bottom: 20px;
+      }
+             
+      #sidebar a {
+        text-decoration: none;
+      }
+      
+      .image-grid-item {
+        position: relative;
+        width: 135px;
+        height: 135px;
+        background-color: black;
+        overflow: hidden;
+        background-color: #eee;
+        box-shadow: inset 0 0 15px rgba(0,0,0,.1),inset 0 0 0 1px rgba(0,0,0,.05);
+        text-align: center;
+        vertical-align: center;
+        border: 2px solid rgba(0,0,0,0.5);
+        display: inline-block;
+        margin: 10px;
+      }
+      
+      .image-grid-item img {
+        max-width: 135px;
+        max-height: 135px;
+      }
+
+      .image-grid-item.selected {
+        outline: 5px solid #2C9BE6;
+      }
+
+      .image-grid-item .remove {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #dfdfdf;
+        padding: 5px;
+        cursor: pointer;
+        display: none;
+      }
+
+      .image-grid-item:hover .remove {
+        display: block;
+      }      
+      
+      #popup {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        background-color: white;
+        display: none;
+      }
+      
+      #popup-close {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        cursor: pointer;
+      }
+      
+      #popup-content {
+        position: absolute;
+        left: 30px;
+        right: 30px;
+        top: 50px;
+        bottom: 30px;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <ul id="sidebar"></ul>
+    <div class="container"></div>
+    <div id="popup">
+      <span id="popup-close">X</span>
+      <div id="popup-content"></div>
+    </div>
+  </body>
+  
+  <script src="js/lib/ejs_0.9_alpha_1_production.js"></script>
+  <script src="js/lib/jquery-2.1.3.min.js"></script>
+  <script src="js/lib/pluralize.js"></script>
+  <script src="js/lib/tinymce/tinymce.min.js"></script>
+  
+  <script src="js/helper.js"></script>
+  
+  <script src="js/models/EntityStructure.js"></script>  
+  <script src="js/models/TextfieldStructure.js"></script>  
+  <script src="js/models/TextareaStructure.js"></script>  
+  <script src="js/models/WysiwygStructure.js"></script>  
+  <script src="js/models/ImageStructure.js"></script>  
+  <script src="js/models/CollectionItem.js"></script>  
+  <script src="js/models/Textfield.js"></script>  
+  <script src="js/models/TextArea.js"></script>  
+  <script src="js/models/Wysiwyg.js"></script>  
+  <script src="js/models/ImageObject.js"></script>  
+  <script src="js/models/ImagePicker.js"></script>  
+  <script src="js/models/ImageUploader.js"></script>  
+
+  <script src="js/router.js"></script>
+  <script src="js/popup.js"></script>
+  <script src="js/controller/SidebarController.js"></script>
+  <script src="js/controller/EntityController.js"></script>
+  <script src="js/controller/CollectionController.js"></script>
+  <script src="js/controller/ImageController.js"></script>
+
+
+  <script type="text/javascript">
+    var router = new Router();
+  </script>
+</html>
+
+
+
+<template id="tmpl-entity">
+  <div>
+    <h1>Entity</h1>
+    <fieldset>
+      <label>Entity Name</label>
+      <input type="text" name="entity-title" autofocus autocomplete="off" value="[%= title %]">
+      <p class="small">(should be singular)</p>
+    </fieldset>
+  
+    <h2>Fields</h2>
+    <div class="fields"></div>
+    
+    <hr>
+    <a href="#" class="small" onclick="return false;" data-purpose="add-textfield">Add Text Field</a><br>
+    <a href="#" class="small" onclick="return false;" data-purpose="add-textarea">Add Text Area</a><br>
+    <a href="#" class="small" onclick="return false;" data-purpose="add-wysiwyg">Add Rich Text Editor</a><br>
+    <a href="#" class="small" onclick="return false;" data-purpose="add-image">Add Image Object</a><br>
+    <hr>
+    <button type="submit">Save</button>
+  </div>
+</template>
+
+
+<template id="tmpl-textfield-structure">
+  <fieldset>
+    <hr>
+    [% if (name != 'title') { %]
+    <span class="right pointer" data-purpose="remove">X</span>
+    [% } %]
+    <h3>Text Field</h3>
+    <label>Field Title</label>
+    <input type="text" name="title" placeholder="Field title" autocomplete="off" value="[%= title %]">
+    [% if (name != 'title') { %]
+    <label>Field Name</label>
+    <input type="text" name="name" placeholder="Field name" autocomplete="off" value="[%= name %]">
+    [% } %]
+    <label>Placeholder</label>
+    <input type="text" name="placeholder" placeholder="Placeholder" autocomplete="off" value="[%= placeholder %]">
+    <label>Hint</label>
+    <input type="text" name="hint" placeholder="Hint" autocomplete="off" value="[%= hint %]">
+  </fieldset>
+</template>
+
+
+<template id="tmpl-textarea-structure">
+  <fieldset>
+    <hr>
+    <span class="right pointer" data-purpose="remove">X</span>
+    <h3>Text Area</h3>
+    <label>Field Title</label>
+    <input type="text" name="title" placeholder="Field title" autocomplete="off" value="[%= title %]">
+    <label>Field Name</label>
+    <input type="text" name="name" placeholder="Field name" autocomplete="off" value="[%= name %]">
+    <label>Placeholder</label>
+    <textarea  name="placeholder" placeholder="Placeholder" autocomplete="off">[%= placeholder %]</textarea>
+    <label>Hint</label>
+    <input type="text" name="hint" placeholder="Hint" autocomplete="off" value="[%= hint %]">
+  </fieldset>
+</template>
+
+
+<template id="tmpl-wysiwyg-structure">
+  <fieldset>
+    <hr>
+    <span class="right pointer" data-purpose="remove">X</span>
+    <h3>Wysiwyg Editor</h3>
+    <label>Field Title</label>
+    <input type="text" name="title" placeholder="Field title" autocomplete="off" value="[%= title %]">
+    <label>Field Name</label>
+    <input type="text" name="name" placeholder="Field name" autocomplete="off" value="[%= name %]">
+    <label>Placeholder</label>
+    <textarea class="wysiwyg" name="placeholder" placeholder="Placeholder" autocomplete="off">[%= placeholder %]</textarea>
+    <label>Hint</label>
+    <input type="text" name="hint" placeholder="Hint" autocomplete="off" value="[%= hint %]">
+  </fieldset>
+</template>
+
+
+<template id="tmpl-image-structure">
+  <fieldset>
+    <hr>
+    <span class="right pointer" data-purpose="remove">X</span>
+    <h3>Image</h3>
+    <label>Field Title</label>
+    <input type="text" name="title" placeholder="Field title" autocomplete="off" value="[%= title %]">
+    <label>Field Name</label>
+    <input type="text" name="name" placeholder="Field name" autocomplete="off" value="[%= name %]">
+    <label>Hint</label>
+    <input type="text" name="hint" placeholder="Hint" autocomplete="off" value="[%= hint %]">
+  </fieldset>
+</template>
+
+
+
+<template id="tmpl-collection-item">
+  <div>
+    <div class="fields"></div>
+    <button type="submit">Save</button>
+  </div>
+</template>
+
+
+<template id="tmpl-textfield">
+  <fieldset>
+    <label>[%= title %]</label>
+    <input type="text" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off" value="[%= value %]">
+    <p class="small">[%= hint %]</p>
+  </fieldset>
+</template>
+
+
+<template id="tmpl-textarea">
+  <fieldset>
+    <label>[%= title %]</label>
+    <textarea name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off">[%= value %]</textarea>
+    <p class="small">[%= hint %]</p>
+  </fieldset>
+</template>
+
+
+<template id="tmpl-wysiwyg">
+  <fieldset>
+    <label>[%= title %]</label>
+    <textarea class="wysiwyg" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off">[%= value %]</textarea>
+    <p class="small">[%= hint %]</p>
+  </fieldset>
+</template>
+
+
+<template id="tmpl-image-object">
+  <fieldset>
+    <label>[%= title %]</label>
+    <div class="image-grid"></div>
+    <button data-role="add-image">Add Image</button>
+    <p class="small">[%= hint %]</p>
+  </fieldset>
+</template>
+
+
+
+
+<template id="tmpl-entity-list-items">
+  <div>
+    [% entities.forEach(function(entity) { %]
+      <li><a href="#/entity/[%= entity._id %]">[%= entity.title || '[New Entity]'%]</a> (<a href="#/entity/[%= entity._id %]/delete">Delete</a>)</li>
+    [% }); %]
+  </div>
+</template>
+
+
+<template id="tmpl-collection-list-items">
+  <div>
+    [% collection_items.forEach(function(item) { %]
+      <li><a href="#/collection/[%= collection_id %]/edit/[%= item._id %]">[%= item.title %]</a> (<a href="#/collection/[%= collection_id %]/delete/[%= item._id %]">Delete</a>)</li>
+    [% }); %]
+  </div>
+</template>
+
+
+<template id="tmpl-image-grid-item">
+  <div class="image-grid-item">
+    <img src="../[%= image.uri %]">
+    <span class="remove">X</span>
+  </div>
+</template>
+
+
+<template id="tmpl-image-grid-items">
+  <div>
+    [% images.forEach(function(image) { %]
+      <div class="image-grid-item" data-grid-item-id="[%= image._id %]">
+        <img src="../[%= image.uri %]">
+      </div>
+    [% }); %]
+  </div>
+</template>
+
+
+<template id="tmpl-image-picker">
+  <div>
+    <h1>Image Picker</h1>
+
+    <form data-purpose="upload-form" action="/images/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="image">
+      <button type="submit" data-purpose="upload-image">Upload</button>
+    </form>
+    <hr>
+    <div class="image-grid"></div>
+    <hr>
+    <button type="submit" data-purpose="select-images">Select Images</button>
+  </div>
+</template>
+
+
+
+<template id="tmpl-sidebar">
+  <ul>
+    <li>
+      <h3>Collections</h3>
+    </li>
+    [% entities.forEach(function(entity) { %]
+      <li><a href="#/collection/[%= entity._id %]">[%= owl.pluralize(entity.title) || '[New Entity]'%]</a></li>
+    [% }); %]
+
+    <li>
+      <hr>
+    </li>
+    <li>
+      <a href="#/images">Image Library</a>
+    </li>
+    <li>
+      <a href="#/entities">Content Structures</a>
+    </li>
+  </ul>
+</template>
+
