@@ -3,6 +3,7 @@ var CollectionItem = function(entity_json, data_json) {
   data_json = data_json || {};
   
   this._id = data_json._id || undefined;
+  this._slug = data_json._slug || undefined;
   this._collection = entity_json.title;
   this._collection_id = entity_json._id;
   this.fields = [];
@@ -104,6 +105,10 @@ CollectionItem.prototype = {
     if (this._id) {
       json._id = this._id;
     }
+
+    if (this._slug) {
+      json._slug = this._slug;
+    }
     
     this.fields.forEach(function(field) {
       var field_json = field.toJSON(),
@@ -111,7 +116,7 @@ CollectionItem.prototype = {
           
       json[key] = field_json.value;
     });
-    
+
     return json;
   }
 }

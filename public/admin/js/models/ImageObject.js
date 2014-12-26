@@ -26,7 +26,7 @@ ImageObject.prototype = {
     this.value.forEach(function(image_ref) {
       var ref = image_ref._ref;
       
-      $.getJSON('/json/image/' + ref.image_id, function(image) {
+      $.getJSON('/json/image/' + ref._id, function(image) {
         self.addImageToImageGrid(image);
       });
     });
@@ -47,10 +47,11 @@ ImageObject.prototype = {
 
       imagePicker.onSelected(function(images) {
         images.forEach(function(image) {
+
           self.value.push({
             _ref: {
-              type: 'image',
-              image_id: image._id,
+              _entity: 'Image',
+              _id: image._id,
             }
           });
           
@@ -82,7 +83,7 @@ ImageObject.prototype = {
   
   removeImageById: function(imageId) {
     this.value = this.value.filter(function(image) {
-      if (image._ref.image_id == imageId) {
+      if (image._ref._id == imageId) {
         return false;
       }
 

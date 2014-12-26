@@ -1,4 +1,5 @@
-var DB = require('../db.js');
+var DB = require('../db.js'),
+    helper = require('../helper.js');
 
 
 exports.json_all = function(req, res) {
@@ -12,6 +13,11 @@ exports.json_all = function(req, res) {
 exports.json_create = function(req, res) {
   var item = req.body,
       Collection = new DB(req.params.collection_id);
+
+  if (!item._slug) {
+    // TODO slug needs to be uniq!!!!!
+    item._slug = helper.slug(item.title);
+  }
 
   Collection.save(item);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify(item) }); 

@@ -3,6 +3,7 @@ var EntityStructure = function(json) {
   json = json || {};
   
   this._id = json._id || undefined;
+  this._slug = json._slug || undefined;
   this.title = json.title || '';
   this.fields = [];
 
@@ -163,9 +164,16 @@ EntityStructure.prototype = {
   
   toJSON: function() {
     var json = {};
-    
+
+    if (this._id) {
+      json._id = this._id;
+    }
+
+    if (this._slug) {
+      json._slug = this._slug;
+    }
+
     json.title = this.title;
-    json._id = this._id;
     json.fields = [];
     
     this.fields.forEach(function(field) {

@@ -5,6 +5,7 @@ var express = require('express'),
     EntityAdminController = require('./controller/EntityAdminController'),
     CollectionAdminController = require('./controller/CollectionAdminController'),
     ImageAdminController = require('./controller/ImageAdminController'),
+    PublishingController = require('./controller/PublishingController'),
     busboy = require('connect-busboy'),
     THEME = 'ddls';
 
@@ -29,5 +30,7 @@ app.post('/images/upload', ImageAdminController.create);
 app.get('/json/images', ImageAdminController.json_all);
 app.get('/json/image/:image_id', ImageAdminController.json_one_by_id);
 app.get('/json/image/:image_id/delete', ImageAdminController.json_delete_by_id);
+
+app.get('/json/published.json', PublishingController.published);
 
 app.listen(9000);
