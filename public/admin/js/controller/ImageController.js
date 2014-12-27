@@ -1,9 +1,10 @@
 ImageController = {
   list: function() {
     var self = this;
-
-    $('*[data-purpose="upload-form"]').submit(function() {
+    $('form[data-purpose="image-upload-form"]').change(function() {
+      var $this = $(this);
       var imageUpload = new ImageUploader($(this), function(image) {
+        $this.find('input[type=file]').val('');
         ImageController._addImage(image);
       });
 

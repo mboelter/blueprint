@@ -13,11 +13,14 @@ ImagePicker.prototype = {
         html = new EJS({element: 'tmpl-image-picker'}).render({});
     
     this.$el = $(html);
-    
-    this.$el.find('*[data-purpose="upload-form"]').submit(function() {
+
+    this.$el.find('form[data-purpose="image-upload-form"]').change(function() {
+      var $this = $(this);
       var imageUpload = new ImageUploader($(this), function(image) {
+        $this.find('input[type=file]').val('');
         self.addImage(image);
       });
+
       return false;
     });
   
