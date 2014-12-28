@@ -169,6 +169,23 @@
         top: 50px;
         bottom: 30px;
       }
+      
+      #image-picker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      
+      #image-picker .image-grid {
+        position: absolute;
+        overflow-y: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 125px;
+      }
     </style>
   </head>
   
@@ -395,17 +412,18 @@
 
 
 <template id="tmpl-image-picker">
-  <div>
+  <div id="image-picker">
     <h1>Image Picker</h1>
+
+    <button type="submit" data-purpose="select-images" class="right">Select Images</button>
 
     <form data-purpose="image-upload-form" action="/images/upload" method="post" enctype="multipart/form-data">
       Upload:
       <input type="file" name="image">
     </form>
+
     <hr>
     <div class="image-grid"></div>
-    <hr>
-    <button type="submit" data-purpose="select-images">Select Images</button>
   </div>
 </template>
 
