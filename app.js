@@ -17,6 +17,8 @@ app.use("/admin/images", express.static(__dirname + "/bp-content/images"));
 app.use(express.static(__dirname + '/public'));
 
 
+
+
 app.get('/json/entities', EntityAdminController.json_all);
 app.get('/json/entity/:id', EntityAdminController.json_one_by_id);
 app.get('/json/entity/:id/delete', EntityAdminController.json_delete_by_id);
@@ -34,6 +36,7 @@ app.get('/json/images', ImageAdminController.json_all);
 app.get('/json/image/:image_id', ImageAdminController.json_one_by_id);
 app.get('/json/image/:image_id/delete', ImageAdminController.json_delete_by_id);
 
+app.get('/admin/publish', PublishingController.publish);
 app.get('/json/published.json', PublishingController.published);
 
 app.listen(9000);

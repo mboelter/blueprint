@@ -8,14 +8,21 @@
       }
       
       .container {
-        margin-left: 250px;
+        margin-left: 230px;
         margin-right: 100px;
-        margin-top: 50px;
+        margin-top: 20px;
         background-color: white;
         min-height: 100%;
         box-shadow: 2px 5px 10px 0px #999;
         padding: 20px;
+        padding-top: 10px;
         padding-right: 150px;
+      }
+      
+      #publish-container {
+       float: right;
+        margin-right: 20px;
+        margin-top: 45px;
       }
       
       h1, h2, h3 {
@@ -73,6 +80,9 @@
       
       #sidebar {
         float: left;
+        margin-right: 50px;
+        min-width: 150px;
+        
       }
       
       #sidebar > ul {
@@ -191,6 +201,7 @@
   
   <body>
     <ul id="sidebar"></ul>
+    <div id="publish-container"><a href="publish" target="_blank">Publish</a></div>
     <div class="container"></div>
     <div id="popup">
       <span id="popup-close">X</span>

@@ -1,6 +1,27 @@
 var DB = require('../db.js'),
     beautify = require('js-beautify').js_beautify;
 
+exports.publish = function(req, res) {
+  var spawn = require('child_process').spawn,
+      command = spawn('sh', ['-c', 'cd bp-content/harp; make']),
+      stdout = '',
+      stderr = '';
+
+    command.stdout.on('data', function (data) {
+      stdout += data;
+    });
+    
+    command.stderr.on('data', function (data) {
+      stderr += data;
+    });
+    
+    command.on('close', function (code) {
+/*       console.log('child process exited with code ' + code); */
+      res.redirect('../dist');
+    });
+};
+
+
 exports.published = function(req, res) {
   var published = {},
       Entity = new DB('Entity'),
