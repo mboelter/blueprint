@@ -48,8 +48,19 @@ ImagePicker.prototype = {
     
     $itemHtml.data('json', image_json);
     $itemHtml.click(function() {
-      $(this).addClass('selected');
-      self._selectedItems.push($(this).data('json'));
+      if ($(this).hasClass('selected')) {
+        var id = $(this).data('json')._id;
+
+        self._selectedItems = self._selectedItems.filter(function(item) {
+          if (item._id == id) { return false; }
+          return true;
+        });        
+        
+        $(this).removeClass('selected');
+      } else {
+        self._selectedItems.push($(this).data('json'));
+        $(this).addClass('selected');
+      }
     });
     
     this.$el.find('.image-grid').prepend($itemHtml);
