@@ -7,13 +7,16 @@ var express = require('express'),
     ImageAdminController = require('./controller/ImageAdminController'),
     PublishingController = require('./controller/PublishingController'),
     busboy = require('connect-busboy'),
-    THEME = 'ddls';
+    helper = require('./helper');
+  
 
+
+app.use(helper.basicAuth('frog', 'friedolin'));
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(busboy()); 
 app.use(partials());
 
-app.use("/admin/images", express.static(__dirname + "/bp-content/images"));
+app.use('/admin/images', express.static(__dirname + "/bp-content/images"));
 app.use(express.static(__dirname + '/public'));
 
 

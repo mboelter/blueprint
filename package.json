@@ -9,6 +9,7 @@
   "author": "Markus Boelter",
   "license": "BSD",
   "dependencies": {
+    "basic-auth": "^1.0.0",
     "body-parser": "^1.10.0",
     "connect-busboy": "0.0.2",
     "ejs": "^1.0.0",
