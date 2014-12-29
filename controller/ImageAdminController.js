@@ -41,7 +41,7 @@ exports.create = function(req, res) {
       var slug = slugForThumbnailConfig(thumbnailConfig);
       
       json.thumbnails[slug] = {
-        uri: 'images/' + slug + '/' + filename,
+        uri: 'images/thumbnails/' + slug + '/' + filename,
         width: thumbnailConfig.width,
         height: thumbnailConfig.height,
         mode: thumbnailConfig.mode
@@ -108,10 +108,14 @@ var createThumbnails = function(filename, settings, callback) {
 var createThumbnail = function(filename, thumbnailConfig, callback) {
   var slug = slugForThumbnailConfig(thumbnailConfig),
       input = pathPrefix + '/original/' + filename,
-      output = pathPrefix + '/' + slug + '/' + filename;;
+      output = pathPrefix + '/thumbnails/' + slug + '/' + filename;;
+
+  if (!fs.existsSync(pathPrefix + '/thumbnails/')) {
+    fs.mkdirSync(pathPrefix + '/thumbnails/')
+  }
   
-  if (!fs.existsSync(pathPrefix + '/' + slug)) {
-    fs.mkdirSync(pathPrefix + '/' + slug)
+  if (!fs.existsSync(pathPrefix + '/thumbnails/' + slug)) {
+    fs.mkdirSync(pathPrefix + '/thumbnails/' + slug)
   }
 
   switch(thumbnailConfig.mode) {
