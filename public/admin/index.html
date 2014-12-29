@@ -196,6 +196,37 @@
         bottom: 0;
         top: 125px;
       }
+      
+      table.relationship-assignments {
+        width: 80%;
+      }
+
+      table.relationship-assignments td {
+        width: 50%;
+        vertical-align: top;  
+        border: 1px dashed #eee;
+        overflow-y: auto;
+      }
+
+      table.relationship-assignments th {
+        text-align: left;
+      }
+
+      table.relationship-assignments ul {
+        margin: 0;
+        padding: 0;
+        height: 150px;
+      }
+
+      table.relationship-assignments li {
+        list-style: none;
+        background-color: #eee;
+        border-bottom: 1px solid white; 
+        cursor: pointer;
+        padding: 3px;
+      }
+      
+      
     </style>
   </head>
   
@@ -409,11 +440,7 @@
 <template id="tmpl-relationship">
   <fieldset>
     <label>[%= title %]</label>
-    <table>
-      <tr>
-        <th>Candidates</th>
-        <th>Selected</th>
-      </tr>
+    <table class="relationship-assignments">
       <tr>
         <td>
           <ul data-purpose="candidate-list"></ul>
