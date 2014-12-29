@@ -1,35 +1,56 @@
 var DB = require('../db.js'),
     fs = require('fs'),
-    Image = new DB('Image');
+    Image = new DB('Image'),
+    gm = require('gm'),
+    pathPrefix = __dirname + '/../bp-content/images'; // NEVER have a trailing slash!
 
 exports.create = function(req, res) {
   var fstream;
 
   req.pipe(req.busboy);
   req.busboy.on('file', function (fieldname, file, filename) {
-    if (!fs.existsSync(__dirname + '/../bp-content/images')) {
-      fs.mkdirSync(__dirname + '/../bp-content/images')
+    if (!fs.existsSync(pathPrefix + '/original')) {
+      fs.mkdirSync(pathPrefix + '/original')
     }
 
-    var path = __dirname + '/../bp-content/images/' + filename;
+    var path = pathPrefix + '/original/' + filename;
     
     while(fs.existsSync(path)) {
       var arr = filename.split('.');
       arr[arr.length - 2] = arr[arr.length - 2] + '_';
       filename = arr.join('.');
-      path = __dirname + '/../bp-content/images/' + filename;
+      path = pathPrefix + '/original/' + filename;
     }
 
-
-    var image = Image.save({
+    var settings = JSON.parse(fs.readFileSync('./bp-settings.json'));
+    var json = {
       title: filename,
-      uri: 'images/' + filename,
-    });
+      filename: filename,
+      uri: 'images/original/' + filename,
+      thumbnails: {}
+    };
+    
+    
+  settings.thumbnailsizes.forEach(function(thumbnailConfig) {
+    var slug = slugForThumbnailConfig(thumbnailConfig);
+    json.thumbnails[slug] = {
+      uri: 'images/' + slug + '/' + filename,
+      width: thumbnailConfig.width,
+      height: thumbnailConfig.height,
+      mode: thumbnailConfig.mode
+    }
+  });    
+    
+    var image = Image.save(json);
+    
+    
     
     fstream = fs.createWriteStream(path);
     file.pipe(fstream);
     fstream.on('close', function () {
-      res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+      createThumbnails(filename, settings, function() {
+        res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+      });
     });
   });
 };
@@ -49,7 +70,72 @@ exports.json_one_by_id = function(req, res) {
 exports.json_delete_by_id = function(req, res) {
   var img = Image.findById(req.params.image_id),
       path = __dirname + '/../bp-content/' + img.uri;
+      
   fs.unlinkSync(path);
   Image.delete(req.params.image_id);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify({}) }); 
+};
+
+
+var createThumbnails = function(filename, settings, callback) {
+      counter = 0;
+
+  settings.thumbnailsizes = settings.thumbnailsizes || [];
+  
+  if (settings.thumbnailsizes.length == 0) {
+    callback();
+    return;
+  }
+  console.log(filename);
+  settings.thumbnailsizes.forEach(function(thumbnailConfig) {
+    createThumbnail(filename, thumbnailConfig, function() {
+      counter = counter + 1;
+      
+      if (counter == settings.thumbnailsizes.length) {
+        callback();
+      }
+    });    
+  });
+};
+
+
+var createThumbnail = function(filename, thumbnailConfig, callback) {
+  var slug = slugForThumbnailConfig(thumbnailConfig);
+  console.log(thumbnailConfig, slug);
+  
+  if (!fs.existsSync(pathPrefix + '/' + slug)) {
+    fs.mkdirSync(pathPrefix + '/' + slug)
+  }
+
+
+  switch(thumbnailConfig.mode) {
+    case 'max':
+      var output = pathPrefix + '/' + slug + '/' + filename;
+      gm(pathPrefix + '/original/' + filename).resize(thumbnailConfig.width, thumbnailConfig.height, '>').stream(function(err, stdout, stderr) {
+        var writeStream = fs.createWriteStream(output, {
+          encoding: 'base64'
+        });
+
+        stdout.pipe(writeStream);
+        callback();
+      });
+      break;
+      
+    case 'min':
+      var output = pathPrefix + '/' + slug + '/' + filename;
+      gm(pathPrefix + '/original/' + filename).resize(thumbnailConfig.width, thumbnailConfig.height, '^').stream(function(err, stdout, stderr) {
+        var writeStream = fs.createWriteStream(output, {
+          encoding: 'base64'
+        });
+
+        stdout.pipe(writeStream);
+        callback();
+      });
+      break;
+  }
+};
+
+
+var slugForThumbnailConfig = function(thumbnailConfig) {
+  return thumbnailConfig.width + 'x' + thumbnailConfig.height + '_' + thumbnailConfig.mode;
 };
