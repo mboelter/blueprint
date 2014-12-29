@@ -68,6 +68,10 @@ EntityStructure.prototype = {
       self.addImage();
     });
 
+    this.$el.find('*[data-purpose="add-relationship"]').click(function() {
+      self.addRelationship();
+    });
+
 
     this.$el.find('button[type="submit"]').click(function() {
       if (self._id) {
@@ -98,6 +102,9 @@ EntityStructure.prototype = {
         break;
       case 'image':
         this.addImage(json);
+        break;
+      case 'relationship':
+        this.addRelationship(json);
         break;
       default:
         console.log('Entity.addField(): Dont know what to do with:', json);
@@ -159,6 +166,20 @@ EntityStructure.prototype = {
 
     this.fields.push(img);
     this.$el.find('.fields').append(img.$el);
+  },
+
+  addRelationship: function(json) {
+    var self = this,
+        relationship = new RelationshipStructure(json),
+        idx = this.fields.length;
+
+    relationship.onRemove(function() {
+      self.fields[idx] = undefined; // mark field as removed
+      relationship.$el.remove();
+    });
+
+    this.fields.push(relationship);
+    this.$el.find('.fields').append(relationship.$el);
   },
 
   

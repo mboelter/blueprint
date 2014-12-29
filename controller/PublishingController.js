@@ -35,7 +35,7 @@ exports.published = function(req, res) {
         }
 
         if (key == '_ref') {
-          var db = new DB(item[key]._entity);
+          var db = new DB(item[key]._entity_id);
               resolved_ref = db.findById(item[key]._id);
           
           return resolved_ref;

@@ -56,6 +56,9 @@ CollectionItem.prototype = {
       case 'image':
         this.addImage(entity_json, data_json);
         break;
+      case 'relationship':
+        this.addRelationship(entity_json, data_json);
+        break;
       default:
         console.log('CollectionItem.addField(): Dont know what to do with:', entity_json, data_json);
         break;
@@ -95,6 +98,15 @@ CollectionItem.prototype = {
 
     this.fields.push(img);
     this.$el.find('.fields').append(img.$el);
+  },
+
+
+  addRelationship: function(entity_json, data_json) {
+    var self = this,
+        relationship = new Relationship(entity_json, data_json);
+
+    this.fields.push(relationship);
+    this.$el.find('.fields').append(relationship.$el);
   },
 
 

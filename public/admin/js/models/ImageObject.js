@@ -50,7 +50,7 @@ ImageObject.prototype = {
 
           self.value.push({
             _ref: {
-              _entity: 'Image',
+              _entity_id: 'Image',
               _id: image._id,
             }
           });
