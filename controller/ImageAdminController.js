@@ -9,12 +9,18 @@ exports.create = function(req, res) {
 
   req.pipe(req.busboy);
   req.busboy.on('file', function (fieldname, file, filename) {
+    if (!fs.existsSync(pathPrefix)) {
+      fs.mkdirSync(pathPrefix)
+    }
+
     if (!fs.existsSync(pathPrefix + '/original')) {
       fs.mkdirSync(pathPrefix + '/original')
     }
 
     var path = pathPrefix + '/original/' + filename;
     
+    // dont overwrite existing files, append _ to filename, but before the extension
+    // filename.jpg will become filename_.jpg
     while(fs.existsSync(path)) {
       var arr = filename.split('.');
       arr[arr.length - 2] = arr[arr.length - 2] + '_';
@@ -22,31 +28,31 @@ exports.create = function(req, res) {
       path = pathPrefix + '/original/' + filename;
     }
 
-    var settings = JSON.parse(fs.readFileSync('./bp-settings.json'));
-    var json = {
-      title: filename,
-      filename: filename,
-      uri: 'images/original/' + filename,
-      thumbnails: {}
-    };
+    var settings = JSON.parse(fs.readFileSync('./bp-settings.json')),
+        json = {
+          title: filename,
+          filename: filename,
+          uri: 'images/original/' + filename,
+          thumbnails: {}
+        };
     
     
-  settings.thumbnailsizes.forEach(function(thumbnailConfig) {
-    var slug = slugForThumbnailConfig(thumbnailConfig);
-    json.thumbnails[slug] = {
-      uri: 'images/' + slug + '/' + filename,
-      width: thumbnailConfig.width,
-      height: thumbnailConfig.height,
-      mode: thumbnailConfig.mode
-    }
-  });    
+    settings.thumbnailsizes.forEach(function(thumbnailConfig) {
+      var slug = slugForThumbnailConfig(thumbnailConfig);
+      
+      json.thumbnails[slug] = {
+        uri: 'images/' + slug + '/' + filename,
+        width: thumbnailConfig.width,
+        height: thumbnailConfig.height,
+        mode: thumbnailConfig.mode
+      }
+    });    
     
     var image = Image.save(json);
     
-    
-    
     fstream = fs.createWriteStream(path);
     file.pipe(fstream);
+    
     fstream.on('close', function () {
       createThumbnails(filename, settings, function() {
         res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
@@ -78,7 +84,7 @@ exports.json_delete_by_id = function(req, res) {
 
 
 var createThumbnails = function(filename, settings, callback) {
-      counter = 0;
+  var counter = 0;
 
   settings.thumbnailsizes = settings.thumbnailsizes || [];
   
@@ -86,7 +92,7 @@ var createThumbnails = function(filename, settings, callback) {
     callback();
     return;
   }
-  console.log(filename);
+
   settings.thumbnailsizes.forEach(function(thumbnailConfig) {
     createThumbnail(filename, thumbnailConfig, function() {
       counter = counter + 1;
@@ -100,35 +106,23 @@ var createThumbnails = function(filename, settings, callback) {
 
 
 var createThumbnail = function(filename, thumbnailConfig, callback) {
-  var slug = slugForThumbnailConfig(thumbnailConfig);
-  console.log(thumbnailConfig, slug);
+  var slug = slugForThumbnailConfig(thumbnailConfig),
+      input = pathPrefix + '/original/' + filename,
+      output = pathPrefix + '/' + slug + '/' + filename;;
   
   if (!fs.existsSync(pathPrefix + '/' + slug)) {
     fs.mkdirSync(pathPrefix + '/' + slug)
   }
 
-
   switch(thumbnailConfig.mode) {
     case 'max':
-      var output = pathPrefix + '/' + slug + '/' + filename;
-      gm(pathPrefix + '/original/' + filename).resize(thumbnailConfig.width, thumbnailConfig.height, '>').stream(function(err, stdout, stderr) {
-        var writeStream = fs.createWriteStream(output, {
-          encoding: 'base64'
-        });
-
-        stdout.pipe(writeStream);
+      gm(input).resize(thumbnailConfig.width, thumbnailConfig.height, '>').write(output, function() {
         callback();
       });
       break;
       
     case 'min':
-      var output = pathPrefix + '/' + slug + '/' + filename;
-      gm(pathPrefix + '/original/' + filename).resize(thumbnailConfig.width, thumbnailConfig.height, '^').stream(function(err, stdout, stderr) {
-        var writeStream = fs.createWriteStream(output, {
-          encoding: 'base64'
-        });
-
-        stdout.pipe(writeStream);
+      gm(input).resize(thumbnailConfig.width, thumbnailConfig.height, '^').write(output, function() {
         callback();
       });
       break;

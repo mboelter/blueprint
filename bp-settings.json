@@ -1,6 +1,6 @@
 {
   "thumbnailsizes": [
-    { "width": 135, "height": 135, "mode": "max" },
-    { "width": 135, "height": 135, "mode": "min" }
+    { "width": 270, "height": 270, "mode": "max" },
+    { "width": 270, "height": 270, "mode": "min" }
   ]
 }
