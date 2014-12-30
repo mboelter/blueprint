@@ -35,6 +35,9 @@ Wysiwyg.prototype = {
       $(this).attr('id', self._textAreaDomId);
       tinymce.init({
         selector: '#' + self._textAreaDomId,
+        menubar : false,
+        plugins: 'link fullscreen',
+        toolbar: ['formatselect | bold italic underline strikethrough | bullist numlist blockquote | alignleft aligncenter alignright alignjustify | link | removeformat | fullscreen'],
       });
     });
   },
