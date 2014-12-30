@@ -1,9 +1,11 @@
 var DB = require('../db.js'),
-    beautify = require('js-beautify').js_beautify;
+    beautify = require('js-beautify').js_beautify,
+    fs = require('fs');
 
 exports.publish = function(req, res) {
   var spawn = require('child_process').spawn,
-      command = spawn('sh', ['-c', 'cd bp-content/harp; make']),
+      settings = JSON.parse(fs.readFileSync('./bp-settings.json')),
+      command = spawn('sh', ['-c', settings.publish_hook]),
       stdout = '',
       stderr = '';
 
@@ -16,8 +18,12 @@ exports.publish = function(req, res) {
     });
     
     command.on('close', function (code) {
-/*       console.log('child process exited with code ' + code); */
-      res.redirect('../dist');
+      if (code == 0) {
+        res.redirect(settings.publish_url);
+      } else {
+        console.log('PublishingController.publish(): child process exited with code ' + code);
+        res.status(500).send('Something went wrong while publishing...');
+      }
     });
 };
 
