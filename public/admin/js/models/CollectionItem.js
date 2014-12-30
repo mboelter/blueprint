@@ -8,6 +8,8 @@ var CollectionItem = function(entity_json, data_json) {
   this._collection_id = entity_json._id;
   this.fields = [];
 
+  this.entity_json = entity_json;
+
   this.$el = this.createEl();
 
   entity_json.fields.forEach(function(field) {
@@ -20,7 +22,9 @@ var CollectionItem = function(entity_json, data_json) {
 
 CollectionItem.prototype = {
   createEl: function() {
-    var html = new EJS({element: 'tmpl-collection-item'}).render({});
+    var html = new EJS({element: 'tmpl-collection-item'}).render({
+      title: this.entity_json.title,
+    });
     return $(html);
   },
   
