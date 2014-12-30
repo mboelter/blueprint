@@ -26,7 +26,7 @@ var EntityStructure = function(json) {
       type: "textfield",
       title: "Title",
       name: H.slug('Title'),
-      placeholder: "Title",
+      placeholder: "",
       hint: "",
     });
   }
