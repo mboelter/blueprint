@@ -280,11 +280,14 @@
 
 <template id="tmpl-entity">
   <div>
-    <h1>Entity</h1>
+    <h1>Content Type</h1>
     <fieldset>
-      <label>Entity Name</label>
+      <label>Content Type Name</label>
       <input type="text" name="entity-title" autofocus autocomplete="off" value="[%= title %]">
-      <p class="small">(should be singular)</p>
+      <p class="small">(Name of a single item, e.g. Template)</p>
+      <label>Collection Name</label>
+      <input type="text" name="collection-title" autofocus autocomplete="off" value="[%= collectionTitle %]">
+      <p class="small">(Collection name holding all items, e.g. Templates)</p>
     </fieldset>
   
     <h2>Fields</h2>
@@ -518,7 +521,7 @@
       <h3>Collections</h3>
     </li>
     [% entities.forEach(function(entity) { %]
-      <li><a href="#/collection/[%= entity._id %]">[%= owl.pluralize(entity.title) || '[New Entity]'%]</a></li>
+      <li><a href="#/collection/[%= entity._id %]">[%= entity.collection_title || '[New Entity]'%]</a></li>
     [% }); %]
 
     <li>

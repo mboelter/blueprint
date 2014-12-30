@@ -54,7 +54,7 @@ exports.published = function(req, res) {
         items = db.findAll();
     
     
-    published[entity._slug] = resolve_references(items);
+    published[entity.collection_slug] = resolve_references(items);
   });
   
   res.render('json/json.ejs', { layout: false, json: beautify(JSON.stringify(published)) }); 

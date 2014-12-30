@@ -1,7 +1,7 @@
 CollectionController = {
   list: function(id) {
     $.getJSON('/json/entity/' + id, function(entity) {
-      $('*[data-purpose="collection-name"]').text(owl.pluralize(entity.title));
+      $('*[data-purpose="collection-name"]').text(entity.collection_title);
       $('a[data-purpose="add-new"]').attr('href', '#/collection/' + entity._id + '/new');
     });
 

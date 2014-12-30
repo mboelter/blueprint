@@ -5,6 +5,8 @@ var EntityStructure = function(json) {
   this._id = json._id || undefined;
   this._slug = json._slug || undefined;
   this.title = json.title || '';
+  this.collectionTitle = json.collection_title || '';
+  this._collectionSlug = json.collection_slig || '';
   this.fields = [];
 
   
@@ -39,6 +41,7 @@ EntityStructure.prototype = {
     
     var html = new EJS({element: 'tmpl-entity'}).render({
       title: self.title,
+      collectionTitle: self.collectionTitle,
     });
 
     return $(html);
@@ -50,6 +53,17 @@ EntityStructure.prototype = {
     
     this.$el.find('input[name="entity-title"]').keyup(function() {
       self.title = $(this).val();
+    });
+
+    if (self.title == '') {
+      this.$el.find('input[name="entity-title"]').keyup(function() {
+        self.collectionTitle = owl.pluralize($(this).val());
+        self.$el.find('input[name="collection-title"]').val(self.collectionTitle);
+      });
+    }
+
+    this.$el.find('input[name="collection-title"]').keyup(function() {
+      self.collectionTitle = $(this).val();
     });
     
     this.$el.find('*[data-purpose="add-textfield"]').click(function() {
@@ -194,7 +208,10 @@ EntityStructure.prototype = {
       json._slug = this._slug;
     }
 
+
     json.title = this.title;
+    json.collection_title = this.collectionTitle;
+    json.collection_slug = H.slug(this.collectionTitle);
     json.fields = [];
     
     this.fields.forEach(function(field) {
