@@ -1,6 +1,7 @@
 var express = require('express'),
     partials = require('express-partials'),
     bodyParser = require('body-parser'), 
+    compression = require('compression'),
     app = express(),
     EntityAdminController = require('./controller/EntityAdminController'),
     CollectionAdminController = require('./controller/CollectionAdminController'),
@@ -11,6 +12,7 @@ var express = require('express'),
   
 
 
+app.use(compression());
 app.use(helper.basicAuth('frog', 'friedolin'));
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(busboy()); 
