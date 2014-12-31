@@ -6,6 +6,7 @@ var CollectionItem = function(entity_json, data_json) {
   this._slug = data_json._slug || undefined;
   this._collection = entity_json.title;
   this._collection_id = entity_json._id;
+  this._collection_slug = entity_json._slug;
   this.fields = [];
 
   this.entity_json = entity_json;
@@ -34,11 +35,11 @@ CollectionItem.prototype = {
     
     this.$el.find('button[type="submit"]').click(function() {
       if (self._id) {
-        $.post('/json/collection/' + self._collection_id + '/' + self._id, self.toJSON(), function() {
+        $.post('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
           window.history.back();      
         });
       } else {
-        $.post('/json/collection/' + self._collection_id, self.toJSON(), function() {
+        $.post('/json/collection/' + self._collection_slug, self.toJSON(), function() {
           window.history.back();      
         });
       }

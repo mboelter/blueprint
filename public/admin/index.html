@@ -476,7 +476,7 @@
 <template id="tmpl-collection-list-items">
   <div>
     [% collection_items.forEach(function(item) { %]
-      <li><a href="#/collection/[%= collection_id %]/edit/[%= item._id %]">[%= item.title %]</a> (<a href="#/collection/[%= collection_id %]/delete/[%= item._id %]">Delete</a>)</li>
+      <li><a href="#/collection/[%= collection_slug %]/edit/[%= item._id %]">[%= item.title %]</a> [<a href="#/collection/[%= collection_slug %]/delete/[%= item._id %]">Delete</a>]</li>
     [% }); %]
   </div>
 </template>
@@ -526,7 +526,7 @@
       <h3>Collections</h3>
     </li>
     [% entities.forEach(function(entity) { %]
-      <li><a href="#/collection/[%= entity._id %]">[%= entity.collection_title || '[New Entity]'%]</a></li>
+      <li><a href="#/collection/[%= entity._slug %]">[%= entity.collection_title || '[Untitled Collection]'%]</a></li>
     [% }); %]
 
     <li>

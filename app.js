@@ -30,11 +30,11 @@ app.get('/json/entity/:slug/delete', EntityAdminController.json_delete_by_slug);
 app.post('/json/entity/:slug', EntityAdminController.json_update_by_slug);
 app.post('/json/entity', EntityAdminController.json_create);
 
-app.get('/json/collection/:collection_id', CollectionAdminController.json_all);
-app.get('/json/collection/:collection_id/:collection_item_id', CollectionAdminController.json_one_by_id);
-app.get('/json/collection/:collection_id/delete/:collection_item_id', CollectionAdminController.json_delete_by_id);
-app.post('/json/collection/:collection_id/:collection_item_id', CollectionAdminController.json_update);
-app.post('/json/collection/:collection_id', CollectionAdminController.json_create);
+app.get('/json/collection/:collection_slug', CollectionAdminController.json_all);
+app.get('/json/collection/:collection_slug/:collection_item_id', CollectionAdminController.json_one_by_id);
+app.get('/json/collection/:collection_slug/delete/:collection_item_id', CollectionAdminController.json_delete_by_id);
+app.post('/json/collection/:collection_slug/:collection_item_id', CollectionAdminController.json_update);
+app.post('/json/collection/:collection_slug', CollectionAdminController.json_create);
 
 app.post('/images/upload', ImageAdminController.create);
 app.get('/json/images', ImageAdminController.json_all);

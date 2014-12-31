@@ -25,26 +25,28 @@ Router = function() {
         EntityController.edit(slug);
       });
     } else if (/^\/collection\/.+\/edit\/.+$/.test(hash)) {
-      var collection_id = hash.split('/')[2],
+      var collection_slug = hash.split('/')[2],
           collection_item_id = hash.split('/')[4];
+          
       self.load('_collection_edit_item.html', function() {
-        CollectionController.edit(collection_id, collection_item_id);
+        CollectionController.edit(collection_slug, collection_item_id);
       });
     } else if (/^\/collection\/.+\/delete\/.+$/.test(hash)) {
-      var collection_id = hash.split('/')[2],
+      var collection_slug = hash.split('/')[2],
           collection_item_id = hash.split('/')[4];
-      $.getJSON('/json/collection/' + collection_id + '/delete/' + collection_item_id, function() {
+          
+      $.getJSON('/json/collection/' + collection_slug + '/delete/' + collection_item_id, function() {
         window.history.back();
       });
     } else if (/^\/collection\/.+\/new$/.test(hash)) {
-      var entity_id = hash.split('/')[2];
+      var collection_slug = hash.split('/')[2];
       self.load('_collection_new_item.html', function() {
-        CollectionController.new(entity_id);
+        CollectionController.new(collection_slug);
       });
     } else if (/^\/collection\/.+/.test(hash)) {
-      var id = hash.split('/')[2];
+      var collection_slug = hash.split('/')[2];
       self.load('_collection.html', function() {
-        CollectionController.list(id);
+        CollectionController.list(collection_slug);
       });
     } else if (hash == '/images') {
       self.load('_images.html', function() {

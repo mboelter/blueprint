@@ -5,7 +5,7 @@ var Relationship = function(json, data_json) {
   this.title = json.title || '';
   this.name = json.name || '';
   this.hint = json.hint || '';
-  this.entity_id = json.entity_id || undefined;
+  this.collection_slug = json.collection_slug || undefined;
   this.value = data_json[json.name] || [];
   
   this.createEl();
@@ -25,9 +25,9 @@ Relationship.prototype = {
 
     this.$el = $(html);
     
-    console.log('need to fetch items for: ', this.entity_id);
+    console.log('need to fetch items for: ', this.collection_slug);
 
-    $.getJSON('/json/collection/' + this.entity_id, function(collection) {
+    $.getJSON('/json/collection/' + this.collection_slug, function(collection) {
       collection.forEach(function(collection_item) {
         var $li = $('<li>' + collection_item.title + '</li>');
         $li.data('collection_item_id', collection_item._id);
@@ -82,7 +82,7 @@ Relationship.prototype = {
   _addReference: function(collection_item_id) {
     this.value.push({
       _ref: {
-        _entity_id: this.entity_id,
+        _collection_slug: this.collection_slug,
         _id: collection_item_id,
       }
     });

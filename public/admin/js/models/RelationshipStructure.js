@@ -7,7 +7,7 @@ var RelationshipStructure = function(json) {
   this.title = json.title || '';
   this.name = json.name || '';  
   this.hint = json.hint || '';
-  this.entity_id = json.entity_id || '';
+  this.collection_slug = json.collection_slug || undefined;
   
   this.onRemoveCallback = undefined;
 
@@ -15,9 +15,9 @@ var RelationshipStructure = function(json) {
 
   $.getJSON('/json/entities', function(entities) {
     entities.forEach(function(entity) {
-      var $option = $('<option value="' + entity._id + '">' + entity.title + '</option>');
+      var $option = $('<option value="' + entity._slug + '">' + entity.title + '</option>');
 
-      if (entity._id == self.entity_id) {
+      if (entity._slug == self.collection_slug) {
         $option.attr('selected', '');
       }
 
@@ -67,8 +67,8 @@ RelationshipStructure.prototype = {
     });
 
     this.$el.find('select[name="entity"]').change(function() {
-      self.entity_id = $(this).val();
-      console.log($(this).val());
+      self.collection_slug = $(this).val();
+      console.log('xxxx', $(this).val());
     });
   },
   
@@ -79,7 +79,7 @@ RelationshipStructure.prototype = {
       title: this.title,
       name: this.name,
       hint: this.hint,
-      entity_id: this.entity_id,
+      collection_slug: this.collection_slug,
     };
   },
 
