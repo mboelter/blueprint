@@ -26,7 +26,7 @@ ImageObject.prototype = {
     this.value.forEach(function(image_ref) {
       var ref = image_ref._ref;
       
-      $.getJSON('/json/image/' + ref._id, function(image) {
+      $.getJSON('/json/image/' + ref._item_id, function(image) {
         self.addImageToImageGrid(image);
       });
     });
@@ -50,8 +50,8 @@ ImageObject.prototype = {
 
           self.value.push({
             _ref: {
-              _entity_id: 'Image',
-              _id: image._id,
+              _collection_slug: 'Image',
+              _item_id: image._id,
             }
           });
           
@@ -83,7 +83,7 @@ ImageObject.prototype = {
   
   removeImageById: function(imageId) {
     this.value = this.value.filter(function(image) {
-      if (image._ref._id == imageId) {
+      if (image._ref._item_id == imageId) {
         return false;
       }
 

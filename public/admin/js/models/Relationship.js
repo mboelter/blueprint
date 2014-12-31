@@ -70,7 +70,7 @@ Relationship.prototype = {
         isSelected = false;
         
     this.value.forEach(function(ref) {
-      if (ref._ref._id == collection_item._id) {
+      if (ref._ref._item_id == collection_item._id) {
         isSelected = true;
       }
     });
@@ -83,7 +83,7 @@ Relationship.prototype = {
     this.value.push({
       _ref: {
         _collection_slug: this.collection_slug,
-        _id: collection_item_id,
+        _item_id: collection_item_id,
       }
     });
   },
@@ -91,7 +91,7 @@ Relationship.prototype = {
   
   _removeReference: function(collection_item_id) {
     this.value = this.value.filter(function(ref) {
-      if (collection_item_id == ref._ref._id) {
+      if (collection_item_id == ref._ref._item_id) {
         return false;
       }
       
