@@ -31,7 +31,7 @@ exports.json_create = function(req, res) {
     entity.fields = [];
   }
 
-  entity._slug = helper.slug(entity.title);
+  entity._slug = helper.slug(helper.pluralize(entity.title));
   
   // conflict of slug name, just keep adding underscores.....
   var entities = Entity.findAll();
