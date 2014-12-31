@@ -1,4 +1,5 @@
 {
+  "port": 9000,
   "publish_hook": "cd bp-content/harp && make",
   "publish_url": "../dist",
   "thumbnailsizes": [

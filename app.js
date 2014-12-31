@@ -8,9 +8,24 @@ var express = require('express'),
     ImageAdminController = require('./controller/ImageAdminController'),
     PublishingController = require('./controller/PublishingController'),
     busboy = require('connect-busboy'),
-    helper = require('./helper');
+    helper = require('./helper'),
+    fs = require('fs');
   
 
+// check if bp-settings.json exists
+// if not, copy over from bp-settings.json.sample
+
+if (!fs.existsSync('./bp-settings.json')) {
+  var settings = fs.readFileSync('./bp-settings.json.sample');
+  fs.writeFileSync('./bp-settings.json', settings);
+};
+
+try {
+  var settings = JSON.parse(fs.readFileSync('./bp-settings.json'));
+} catch(e) {
+  console.log('Error parsing bp-settings.json.');
+  return;
+}
 
 app.use(compression());
 app.use(helper.basicAuth('frog', 'friedolin'));
@@ -44,4 +59,4 @@ app.get('/json/image/:image_id/delete', ImageAdminController.json_delete_by_id);
 app.get('/admin/publish', PublishingController.publish);
 app.get('/json/published.json', PublishingController.published);
 
-app.listen(9000);
+app.listen(settings.port);
