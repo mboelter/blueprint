@@ -68,6 +68,18 @@ DB.prototype = {
       }
     }
   },
+
+
+  deleteBySlug: function(slug) {
+    for (var i = 0, len = this._collection.length; i < len; i++) {
+      if (slug == this._collection[i]._slug) {
+        this._collection.splice(i, 1);
+        this._writeDB();
+        
+        return true;
+      }
+    }
+  },
   
   
   update: function(id, json) {
