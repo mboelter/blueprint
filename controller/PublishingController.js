@@ -41,8 +41,8 @@ exports.published = function(req, res) {
         }
 
         if (key == '_ref') {
-          var db = new DB(item[key]._entity_id);
-              resolved_ref = db.findById(item[key]._id);
+          var db = new DB(item[key]._collection_slug);
+              resolved_ref = db.findById(item[key]._item_id);
           
           return resolved_ref;
         }
@@ -56,7 +56,7 @@ exports.published = function(req, res) {
   
   
   entities.forEach(function(entity) {
-    var db = new DB(entity._id),
+    var db = new DB(entity._slug),
         items = db.findAll();
     
     
