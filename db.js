@@ -97,6 +97,17 @@ DB.prototype = {
     }
     
     return undefined;
+  },
+
+
+  findBySlug: function(slug) {
+    for (var i = 0, len = this._collection.length; i < len; i++) {
+      if (slug == this._collection[i]._slug) {
+        return this._collection[i]; 
+      }
+    }
+    
+    return undefined;
   }
 };
 
