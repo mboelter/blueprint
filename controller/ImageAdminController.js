@@ -2,6 +2,7 @@ var DB = require('../db.js'),
     fs = require('fs'),
     Image = new DB('Image'),
     gm = require('gm'),
+    helper = require('../helper.js'),
     pathPrefix = __dirname + '/../bp-content/images'; // NEVER have a trailing slash!
 
 exports.create = function(req, res) {
@@ -30,6 +31,7 @@ exports.create = function(req, res) {
 
     var settings = JSON.parse(fs.readFileSync('./bp-settings.json')),
         json = {
+          _slug: helper.slug(filename),
           title: filename,
           filename: filename,
           uri: 'images/original/' + filename,

@@ -31,7 +31,8 @@ exports.json_create = function(req, res) {
     entity.fields = [];
   }
 
-  if (entity._slug === undefined) {
+  if (!entity._slug) {
+    // TODO slug needs to be uniq!!!!!
     entity._slug = helper.slug(entity.title);
   }
   
