@@ -15,14 +15,14 @@ Router = function() {
         EntityController.new();
       });
     } else if (/^\/entity\/.+\/delete$/.test(hash)) {
-      var id = hash.split('/')[2];
-      $.getJSON('/json/entity/' + id + '/delete', function() {
+      var slug = hash.split('/')[2];
+      $.getJSON('/json/entity/' + slug + '/delete', function() {
         window.history.back();
       });
     } else if (/^\/entity\/.+/.test(hash)) {
-      var id = hash.split('/')[2];
+      var slug = hash.split('/')[2];
       self.load('_entity.html', function() {
-        EntityController.edit(id);
+        EntityController.edit(slug);
       });
     } else if (/^\/collection\/.+\/edit\/.+$/.test(hash)) {
       var collection_id = hash.split('/')[2],

@@ -9,18 +9,18 @@ exports.json_all = function(req, res) {
 };
 
 exports.json_one_by_id = function(req, res) {
-  var entity = Entity.findById(req.params.id);
+  var entity = Entity.findBySlug(req.params.slug);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify(entity) }); 
 };
 
-exports.json_delete_by_id = function(req, res) {
-  Entity.delete(req.params.id);
+exports.json_delete_by_slug = function(req, res) {
+  Entity.deleteBySlug(req.params.slug);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify({}) }); 
 };
 
-exports.json_update = function(req, res) {
-  var entity = Entity.findById(req.params.id);
-  Entity.update(req.params.id, req.body);
+exports.json_update_by_slug = function(req, res) {
+  var entity = Entity.findBySlug(req.params.slug);
+  Entity.updateBySlug(req.params.slug, req.body);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify(entity) }); 
 };
 
@@ -31,15 +31,13 @@ exports.json_create = function(req, res) {
     entity.fields = [];
   }
 
-  if (!entity._slug) {
-    // TODO slug needs to be uniq!!!!!
-    entity._slug = helper.slug(entity.title);
-  }
+  entity._slug = helper.slug(entity.title);
   
+  // conflict of slug name, just keep adding underscores.....
   var entities = Entity.findAll();
+
   entities.forEach(function(e) {
     if (entity._slug == e._slug) {
-      // conflict of slug name, just keep adding underscores.....
       while (entity._slug == e._slug) {
         entity._slug = entity._slug + '_';
       }

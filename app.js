@@ -25,9 +25,9 @@ app.use(express.static(__dirname + '/public'));
 
 
 app.get('/json/entities', EntityAdminController.json_all);
-app.get('/json/entity/:id', EntityAdminController.json_one_by_id);
-app.get('/json/entity/:id/delete', EntityAdminController.json_delete_by_id);
-app.post('/json/entity/:id', EntityAdminController.json_update);
+app.get('/json/entity/:slug', EntityAdminController.json_one_by_id);
+app.get('/json/entity/:slug/delete', EntityAdminController.json_delete_by_slug);
+app.post('/json/entity/:slug', EntityAdminController.json_update_by_slug);
 app.post('/json/entity', EntityAdminController.json_create);
 
 app.get('/json/collection/:collection_id', CollectionAdminController.json_all);

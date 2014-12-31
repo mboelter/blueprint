@@ -5,14 +5,14 @@ EntityController = {
     });
   },
   
-  edit: function(id) {
-    $.getJSON('/json/entity/' + id, function(entity) {
+  edit: function(slug) {
+    $.getJSON('/json/entity/' + slug, function(entity) {
       var entity = new EntityStructure(entity);
       $('#entity').html(entity.$el);
     });
   },
 
-  new: function(id) {
+  new: function() {
     var entity = new EntityStructure();
     $('#entity').html(entity.$el);
   }

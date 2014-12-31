@@ -467,7 +467,7 @@
 <template id="tmpl-entity-list-items">
   <div>
     [% entities.forEach(function(entity) { %]
-      <li><a href="#/entity/[%= entity._id %]">[%= entity.title || '[New Entity]'%]</a> (<a href="#/entity/[%= entity._id %]/delete">Delete</a>)</li>
+      <li><a href="#/entity/[%= entity._slug %]">[%= entity.title || '[Untitled Content Type]'%]</a> [<a href="#/entity/[%= entity._slug %]/delete">Delete</a>]</li>
     [% }); %]
   </div>
 </template>
