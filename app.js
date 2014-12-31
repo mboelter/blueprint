@@ -57,6 +57,7 @@ app.get('/json/image/:image_id', ImageAdminController.json_one_by_id);
 app.get('/json/image/:image_id/delete', ImageAdminController.json_delete_by_id);
 
 app.get('/admin/publish', PublishingController.publish);
-app.get('/json/published.json', PublishingController.published);
+app.get('/json/published/all', PublishingController.publishedAll);
+app.get('/json/published/:collection_slug', PublishingController.publishedCollection);
 
 app.listen(settings.port);
