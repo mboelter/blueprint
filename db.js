@@ -94,6 +94,20 @@ DB.prototype = {
     
     return false;
   },
+
+
+  updateBySlug: function(slug, json) {
+    for (var i = 0, len = this._collection.length; i < len; i++) {
+      if (slug == this._collection[i]._slug) {
+        this._collection.splice(i, 1, json);
+        this._writeDB();
+        
+        return json;
+      }
+    }
+    
+    return false;
+  },
   
   
   findAll: function() {
