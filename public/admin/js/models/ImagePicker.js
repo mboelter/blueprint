@@ -18,7 +18,9 @@ ImagePicker.prototype = {
       var $this = $(this);
       var imageUpload = new ImageUploader($(this), function(image) {
         $this.find('input[type=file]').val('');
-        self.addImage(image);
+        self.addImage(image, {
+          selected: true,
+        });
       });
 
       return false;
@@ -41,12 +43,22 @@ ImagePicker.prototype = {
   },
   
   
-  addImage: function(image_json) {
+  addImage: function(image_json, params) {
+    params = params || {};
+    
     var self = this,
         itemHtml = new EJS({element: 'tmpl-image-grid-item'}).render({image: image_json}),
         $itemHtml = $(itemHtml);
     
+    
     $itemHtml.data('json', image_json);
+
+    if (params.selected) {
+      this._selectedItems.push(image_json);
+      $itemHtml.addClass('selected');
+    }
+
+
     $itemHtml.click(function() {
       if ($(this).hasClass('selected')) {
         var id = $(this).data('json')._id;
