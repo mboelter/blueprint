@@ -1,8 +1,15 @@
 body {
   font-family: Georgia, "Times New Roman", "Bitstream Charter", Times, serif;
   font-size: 0.9em;
-  line-height: 1.5em;
   padding: 2em;
   padding-top: 0em;
   padding-bottom: 0em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: sans-serif;
+}
+
+p {
+  line-height: 1.5em;
 }
