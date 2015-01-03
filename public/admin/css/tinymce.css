@@ -2,4 +2,7 @@ body {
   font-family: Georgia, "Times New Roman", "Bitstream Charter", Times, serif;
   font-size: 0.9em;
   line-height: 1.5em;
+  padding: 2em;
+  padding-top: 0em;
+  padding-bottom: 0em;
 }
