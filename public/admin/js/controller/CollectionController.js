@@ -8,6 +8,7 @@ CollectionController = {
     });
 
     $.getJSON('/json/collection/' + collection_slug, function(collection_items) {
+      collection_items = collection_items.reverse();
       console.log(collection_items);
       new EJS({element: 'tmpl-collection-list-items'}).update('collection-item-list', {collection_items: collection_items, collection_slug: collection_slug});
     });

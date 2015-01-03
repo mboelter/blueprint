@@ -240,6 +240,22 @@
         top: 125px;
       }
       
+      table#collection-item-list {
+        width: 100%;
+        border-collapse: collapse;
+        line-height: 1.5em;
+      }
+
+      table#collection-item-list td {
+        padding-left: 5px;
+        padding-right: 5px;
+      }      
+
+      table#collection-item-list tr:hover{
+        background-color: #f9f9f9;
+      }
+      
+      
       table.relationship-assignments {
         width: 80%;
       }
@@ -513,11 +529,16 @@
 
 
 <template id="tmpl-collection-list-items">
-  <div>
     [% collection_items.forEach(function(item) { %]
-      <li><a href="#/collection/[%= collection_slug %]/edit/[%= item._id %]">[%= item.title %]</a> [<a href="#/collection/[%= collection_slug %]/delete/[%= item._id %]">Delete</a>]</li>
+    <tr>
+      <td>
+        <a href="#/collection/[%= collection_slug %]/edit/[%= item._id %]">[%= item.title %]</a>
+      </td>
+      <td>
+        <a class="right" href="#/collection/[%= collection_slug %]/delete/[%= item._id %]">Delete</a>
+      </td>
+    </tr>
     [% }); %]
-  </div>
 </template>
 
 
