@@ -34,6 +34,7 @@ Wysiwyg.prototype = {
       
       $(this).attr('id', self._textAreaDomId);
       tinymce.init({
+        content_css : 'css/tinymce.css',
         selector: '#' + self._textAreaDomId,
         menubar : false,
         plugins: 'link fullscreen',
