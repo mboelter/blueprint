@@ -328,6 +328,7 @@
   <script src="js/controller/EntityController.js"></script>
   <script src="js/controller/CollectionController.js"></script>
   <script src="js/controller/ImageController.js"></script>
+  <script src="js/controller/JsonApiController.js"></script>
 
 
   <script type="text/javascript">
@@ -598,6 +599,15 @@
     <li>
       <a href="#/entities">Content Types</a>
     </li>
+    <li>
+      <a href="#/json_api">JSON API</a>
+    </li>
   </ul>
 </template>
 
+
+<template id="tmpl-json-endpoint-list-item">
+  <li>
+    <a href="/json/published/[%= entity.collection_slug %]" target="_blank">/json/published/[%= entity.collection_slug %]</a>
+  </li>
+</template>

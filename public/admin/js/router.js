@@ -52,6 +52,10 @@ Router = function() {
       self.load('_images.html', function() {
         ImageController.list();
       });
+    } else if (hash == '/json_api') {
+      self.load('_json_api.html', function() {
+        JsonApiController.list();
+      });
     } else {
       console.log('Router: Not found: ', hash);
       self.load('_not_found.html');
