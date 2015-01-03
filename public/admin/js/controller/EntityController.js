@@ -2,6 +2,10 @@ EntityController = {
   list: function() {
     $.getJSON('/json/entities', function(entities) {
       new EJS({element: 'tmpl-entity-list-items'}).update('entity-list', {entities: entities});
+      
+      $('*[data-purpose="add-new"]').click(function() {
+        window.location.href = '#/entity/new';
+      });
     });
   },
   

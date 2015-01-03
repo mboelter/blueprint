@@ -7,6 +7,15 @@
         font-family: sans-serif;
       }
       
+      a, a:visited, a:hover {
+        color: #2C9BE6;
+        text-decoration: none;
+      }
+      
+      a:hover {
+        text-decoration: underline;
+      }
+      
       .container {
         margin-left: 230px;
         margin-right: 100px;
@@ -63,6 +72,36 @@
         min-height: 200px;
       }
       
+
+      button.btn {
+        font-size: 1em;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-shadow: border-box;
+        display: inline-block;
+        border-radius: 2px;
+      }
+
+      button.btn.btn-primary {
+        background-color: #2C9BE6;
+      }
+
+      button.btn.btn-secondary {
+        background-color: #EEEEEE;
+        color: #999;
+        font-size: 0.75em;
+      }
+
+      button.btn.btn-secondary:hover {
+        background-color: #2C9BE6;
+        color: #fff;
+      }
+
+
       button[type="submit"] {
         font-size: 1em;
         background-color: #2C9BE6;
@@ -72,6 +111,10 @@
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
+      }
+
+      .left {
+        float: left;
       }
       
       .right {
@@ -117,10 +160,6 @@
         margin-bottom: 20px;
       }
              
-      #sidebar a {
-        text-decoration: none;
-      }
-      
       .image-grid-item {
         position: relative;
         width: 135px;
@@ -180,7 +219,7 @@
         position: absolute;
         left: 30px;
         right: 30px;
-        top: 50px;
+        top: 0px;
         bottom: 30px;
       }
       

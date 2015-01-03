@@ -2,7 +2,9 @@ CollectionController = {
   list: function(collection_slug) {
     $.getJSON('/json/entity/' + collection_slug, function(entity) {
       $('*[data-purpose="collection-name"]').text(entity.collection_title);
-      $('a[data-purpose="add-new"]').attr('href', '#/collection/' + entity._slug + '/new');
+      $('*[data-purpose="add-new"]').click(function() {
+        window.location.href = '#/collection/' + entity._slug + '/new';
+      });
     });
 
     $.getJSON('/json/collection/' + collection_slug, function(collection_items) {
