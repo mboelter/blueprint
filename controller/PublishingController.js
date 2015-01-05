@@ -3,25 +3,34 @@ var DB = require('../db.js'),
     fs = require('fs');
 
 
-var resolve_references = function(items) {
-  items = items.map(function(item) {
-    for (var key in item) {
-      if (Array.isArray(item[key])) {
-        item[key] = resolve_references(item[key]);
-      }
-
-      if (key == '_ref') {
-        var db = new DB(item[key]._collection_slug);
-            resolved_ref = db.findById(item[key]._item_id);
-        
-        return resolved_ref;
-      }
-    }
-    
-    return item;
-  });
+var resolve_references = function(items, depth) {
+  depth = depth || 0;
+  depth++;
   
-  return items;
+  // some safeguard for circular references.
+  if (depth == 10) {
+    console.log('WARNING: PublishingController.resolve_references(): Depth too deep, no resolving anymore.')
+    return items;
+  }
+  
+  if (Array.isArray(items)) {
+    return items.map(function(item) {
+      return resolve_references(item, depth);
+    });
+  }
+  
+  var item = items; // seems we only deal with one item;
+
+  for (var key in item) {
+    if (Array.isArray(item[key])) {
+      item[key] = resolve_references(item[key], depth);
+    } else if (key == '_ref') {
+      var resolved_ref = new DB(item[key]._collection_slug).findById(item[key]._item_id);
+      item = resolve_references(resolved_ref, depth);
+    }
+  };
+  
+  return item;
 };
 
 

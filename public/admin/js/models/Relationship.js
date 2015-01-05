@@ -51,7 +51,7 @@ Relationship.prototype = {
           collection_item_id = $li.data('collection_item_id');
       
       self._addReference(collection_item_id);
-      $li.appendTo('ul[data-purpose="selected-list"]');
+      $li.appendTo(self.$el.find('ul[data-purpose="selected-list"]'));
     });
 
     this.$el.find('ul[data-purpose="selected-list"]').click(function(e) {
@@ -60,7 +60,7 @@ Relationship.prototype = {
 
 
       self._removeReference(collection_item_id);
-      $li.appendTo('ul[data-purpose="candidate-list"]');
+      $li.appendTo(self.$el.find('ul[data-purpose="candidate-list"]'));
     });
   },
   
