@@ -14,6 +14,11 @@ exports.json_one_by_id = function(req, res) {
 };
 
 exports.json_delete_by_slug = function(req, res) {
+  var entity = Entity.findBySlug(req.params.slug),
+      collection = new DB(entity.collection_slug);
+  
+  collection.destroy();
+
   Entity.deleteBySlug(req.params.slug);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify({}) }); 
 };

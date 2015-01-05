@@ -46,6 +46,12 @@ DB.prototype = {
   },
   
   
+  // destroy whole DB, use with care!!
+  destroy: function() {
+    fs.unlinkSync(this._filename);
+  },
+  
+  
   save: function(json) {
     if (!json._id) {
       json._id = this._UUID();
