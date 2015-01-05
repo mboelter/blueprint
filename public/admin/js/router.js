@@ -16,9 +16,13 @@ Router = function() {
       });
     } else if (/^\/entity\/.+\/delete$/.test(hash)) {
       var slug = hash.split('/')[2];
-      $.getJSON('/json/entity/' + slug + '/delete', function() {
+      if (confirm('Are you sure to delete items in "' + slug + '"')) {
+        $.getJSON('/json/entity/' + slug + '/delete', function() {
+          window.history.back();
+        });
+      } else {
         window.history.back();
-      });
+      }
     } else if (/^\/entity\/.+/.test(hash)) {
       var slug = hash.split('/')[2];
       self.load('_entity.html', function() {
