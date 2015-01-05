@@ -14,9 +14,20 @@ var resolve_references = function(items, depth) {
   }
   
   if (Array.isArray(items)) {
-    return items.map(function(item) {
+    items = items.map(function(item) {
       return resolve_references(item, depth);
     });
+    
+    // Sanitize:
+    // remove references that point to an item that doesnt exist anymore.
+    // they would look like null orr undefined as an element in the array.
+    items = items.filter(function(item) {
+      if (item) { return true; }
+
+      return false;
+    });
+    
+    return items;
   }
   
   var item = items; // seems we only deal with one item;
