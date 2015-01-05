@@ -90,12 +90,12 @@ EntityStructure.prototype = {
     this.$el.find('button[type="submit"]').click(function() {
       if (self._id) {
         console.log(self.toJSON());
-        $.post('/json/entity/' + self._slug, self.toJSON(), function() {
+        H.postJSON('/json/entity/' + self._slug, self.toJSON(), function() {
           window.history.back();      
         });
       } else {
         console.log(self.toJSON());
-        $.post('/json/entity', self.toJSON(), function() {
+        H.postJSON('/json/entity', self.toJSON(), function() {
           window.history.back();      
         });
       }

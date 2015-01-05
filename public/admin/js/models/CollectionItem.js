@@ -35,11 +35,11 @@ CollectionItem.prototype = {
     
     this.$el.find('button[type="submit"]').click(function() {
       if (self._id) {
-        $.post('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
+        H.postJSON('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
           window.history.back();      
         });
       } else {
-        $.post('/json/collection/' + self._collection_slug, self.toJSON(), function() {
+        H.postJSON('/json/collection/' + self._collection_slug, self.toJSON(), function() {
           window.history.back();      
         });
       }

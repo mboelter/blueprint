@@ -8,4 +8,14 @@ H = {
   slug: function(s) {
     return s.toLowerCase().replace(/ /g,'_').replace(/[^\w-]+/g,'');
   },
+  
+  postJSON: function(url, data, successCallback) {
+    $.ajax(url, {
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      type : 'POST',
+      success: successCallback,
+    });
+  },
+  
 };
