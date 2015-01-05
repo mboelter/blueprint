@@ -16,7 +16,7 @@ Router = function() {
       });
     } else if (/^\/entity\/.+\/delete$/.test(hash)) {
       var slug = hash.split('/')[2];
-      if (confirm('Are you sure to delete items in "' + slug + '"')) {
+      if (confirm('Are you sure to delete "' + slug + '" and ALL items in "' + slug + '"?')) {
         $.getJSON('/json/entity/' + slug + '/delete', function() {
           window.history.back();
         });
