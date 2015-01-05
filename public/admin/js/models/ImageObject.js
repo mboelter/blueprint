@@ -65,7 +65,12 @@ ImageObject.prototype = {
   
   addImageToImageGrid: function(image) {
     var self = this,
-        imageHtml = new EJS({element: 'tmpl-image-grid-item'}).render({image: image}),
+        imageHtml = new EJS({element: 'tmpl-image-grid-item'}).render({
+          image: image, 
+          params: {
+            show_remove_link: true,
+          }, 
+        }),
         $imageHtml = $(imageHtml);
 
     $imageHtml.data('json', image);

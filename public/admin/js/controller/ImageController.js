@@ -20,7 +20,12 @@ ImageController = {
   
   _addImage: function(image_json) {
     var self = this,
-        imageHtml = new EJS({element: 'tmpl-image-grid-item'}).render({image: image_json}),
+        imageHtml = new EJS({element: 'tmpl-image-grid-item'}).render({
+          image: image_json,
+          params: {
+            show_remove_link: true,
+          }, 
+        }),
         $imageHtml = $(imageHtml);
     
     $imageHtml.data('json', image_json);

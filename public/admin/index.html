@@ -173,6 +173,7 @@
         display: inline-block;
         margin: 10px;
         float: left;
+        cursor: pointer;
       }
       
       .image-grid-item img {
@@ -546,7 +547,9 @@
 <template id="tmpl-image-grid-item">
   <div class="image-grid-item">
     <img src="[%= image.thumbnails['270x270_max'].uri %]">
+    [% if (params.show_remove_link) { %]
     <span class="remove">X</span>
+    [% } %]
   </div>
 </template>
 

@@ -47,7 +47,12 @@ ImagePicker.prototype = {
     params = params || {};
     
     var self = this,
-        itemHtml = new EJS({element: 'tmpl-image-grid-item'}).render({image: image_json}),
+        itemHtml = new EJS({element: 'tmpl-image-grid-item'}).render({
+          image: image_json,
+          params: {
+            show_remove_link: false,
+          }, 
+        }),
         $itemHtml = $(itemHtml);
     
     
