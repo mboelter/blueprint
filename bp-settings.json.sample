@@ -2,6 +2,8 @@
   "port": 9000,
   "publish_hook": "cd bp-content/harp && make",
   "publish_url": "../dist",
+  "publish_package_hook": "cd public && rm dist.tar.gz && tar cfz dist.tar.gz dist",
+  "publish_package_url": "../../dist.tar.gz",
   "thumbnailsizes": [
     { "width": 270, "height": 270, "mode": "max" },
     { "width": 270, "height": 270, "mode": "min" }
