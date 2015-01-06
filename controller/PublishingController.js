@@ -71,7 +71,7 @@ exports.publish = function(req, res) {
         console.log(stdout);
         console.log('stderr:');
         console.log(stderr);
-       res.status(500).send('Something went wrong while publishing...<br><pre>' + stdout + '</pre><br><pre>' + stderr + '</pre>');
+        res.status(500).send('Something went wrong while publishing...<br><pre>' + stdout + '</pre><br><pre>' + stderr + '</pre>');
       }
     });
 };
