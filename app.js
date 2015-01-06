@@ -34,8 +34,10 @@ app.use(bodyParser.json()); // for parsing json
 app.use(busboy()); 
 app.use(partials());
 
+
 app.use('/admin/images', express.static(__dirname + "/bp-content/images"));
-app.use(express.static(__dirname + '/public'));
+app.use('/admin', express.static(__dirname + "/core/admin"));
+app.use('/', express.static(__dirname + '/bp-content/published'));
 
 
 
