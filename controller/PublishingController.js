@@ -96,3 +96,30 @@ exports.publishedCollection = function(req, res) {
 
   res.render('json/json.ejs', { layout: false, json: beautify(JSON.stringify(published_items)) }); 
 };
+
+
+exports.downloadAsZip = function(req, res) {
+  var spawn = require('child_process').spawn,
+      settings = JSON.parse(fs.readFileSync('./bp-settings.json')),
+      command = spawn('sh', ['-c', settings.publish_package_hook]),
+      stdout = '',
+      stderr = '';
+
+    command.stdout.on('data', function (data) {
+      stdout += data;
+    });
+    
+    command.stderr.on('data', function (data) {
+      stderr += data;
+    });
+    
+    command.on('close', function (code) {
+      if (code == 0) {
+        res.redirect(settings.publish_package_url);
+      } else {
+        console.log('PublishingController.downloadAsZip(): child process exited with code ' + code);
+        res.status(500).send('Something went wrong while zipping...');
+      }
+    });
+  
+};
