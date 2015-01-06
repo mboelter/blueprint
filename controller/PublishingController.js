@@ -67,7 +67,11 @@ exports.publish = function(req, res) {
         res.redirect(settings.publish_url);
       } else {
         console.log('PublishingController.publish(): child process exited with code ' + code);
-        res.status(500).send('Something went wrong while publishing...');
+        console.log('stdout:');
+        console.log(stdout);
+        console.log('stderr:');
+        console.log(stderr);
+       res.status(500).send('Something went wrong while publishing...<br><pre>' + stdout + '</pre><br><pre>' + stderr + '</pre>');
       }
     });
 };
@@ -118,7 +122,12 @@ exports.downloadAsZip = function(req, res) {
         res.redirect(settings.publish_package_url);
       } else {
         console.log('PublishingController.downloadAsZip(): child process exited with code ' + code);
-        res.status(500).send('Something went wrong while zipping...');
+        console.log('stdout:');
+        console.log(stdout);
+        console.log('stderr:');
+        console.log(stderr);
+
+        res.status(500).send('Something went wrong while zipping...<br><pre>' + stdout + '</pre><br><pre>' + stderr + '</pre>');
       }
     });
   
