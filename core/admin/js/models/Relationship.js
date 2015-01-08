@@ -45,6 +45,15 @@ Relationship.prototype = {
 
   bind: function() {
     var self = this;
+    
+    this.$el.find('input[data-purpose="search"]').on('keyup click', function() {
+      var $this = $(this);
+      
+      setTimeout(function() { // need setTimeout to capture the content AFTER keypress, otherwise one character missing
+        var q = $this.val();
+        self.filter(q);
+      }, 50);
+    });
 
     this.$el.find('ul[data-purpose="candidate-list"]').click(function(e) {
       var $li = $(e.target),
@@ -96,6 +105,30 @@ Relationship.prototype = {
       }
       
       return true;
+    });
+  },
+  
+  
+  filter: function(q) {
+    var $listItems =  this.$el.find('ul[data-purpose="candidate-list"] li');
+    
+    q = q.trim();
+    
+    if (q.trim() == '') {
+      $listItems.show();
+      return;
+    }
+    
+    var regex = new RegExp('.*' + q + '.*', 'i');
+    
+    $listItems.each(function(i, li) {
+      var $li = $(li);
+
+      if ($li.text().match(regex)) {
+        $li.show();
+      } else {
+        $li.hide();
+      }
     });
   },
 
