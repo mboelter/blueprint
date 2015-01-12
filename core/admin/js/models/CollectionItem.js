@@ -35,12 +35,15 @@ CollectionItem.prototype = {
     
     this.$el.find('button[data-purpose="save"]').click(function() {
       if (self._id) {
+        // update
         H.postJSON('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
           var toast = new Toast('Saved.');
         });
       } else {
+        // create
         H.postJSON('/json/collection/' + self._collection_slug, self.toJSON(), function() {
           var toast = new Toast('Saved.');
+          window.history.back();
         });
       }
     });
