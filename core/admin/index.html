@@ -293,6 +293,20 @@
       }
       
       
+      #toast {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        
+        width: 160px;
+        background-color: #20A052;
+        color: white;
+        padding: 20px;
+        opacity: 0;
+        display: none;
+        -webkit-transition: opacity 300ms;
+      }
+      
     </style>
   </head>
   
@@ -307,6 +321,7 @@
       <span id="popup-close">X</span>
       <div id="popup-content"></div>
     </div>
+    <div id="toast">Saved!</div>
   </body>
   
   <script src="js/lib/ejs_0.9_alpha_1_production.js"></script>
@@ -334,6 +349,7 @@
 
   <script src="js/router.js"></script>
   <script src="js/popup.js"></script>
+  <script src="js/toast.js"></script>
   <script src="js/controller/SidebarController.js"></script>
   <script src="js/controller/EntityController.js"></script>
   <script src="js/controller/CollectionController.js"></script>
