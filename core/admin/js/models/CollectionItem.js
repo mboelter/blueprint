@@ -36,11 +36,11 @@ CollectionItem.prototype = {
     this.$el.find('button[type="submit"]').click(function() {
       if (self._id) {
         H.postJSON('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
-          window.history.back();      
+          var toast = new Toast('Saved.');
         });
       } else {
         H.postJSON('/json/collection/' + self._collection_slug, self.toJSON(), function() {
-          window.history.back();      
+          var toast = new Toast('Saved.');
         });
       }
     });
