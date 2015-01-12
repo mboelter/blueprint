@@ -584,11 +584,16 @@
 
 <template id="tmpl-image-grid-item">
   <div class="image-grid-item">
-    <img src="[%= image.thumbnails['270x270_max'].uri %]">
-    [% if (params.show_remove_link) { %]
-    <span class="remove">X</span>
+    [% if (image) { %]
+      <img src="[%= image.thumbnails['270x270_max'].uri %]">
+      [% if (params.show_remove_link) { %]
+      <span class="remove">X</span>
+      [% } %]
+      <div class="filename">[%= image.filename %]</div>
+    [% } else { %]
+      <span class="remove">X</span>
+      <div class="filename">[Image has been deleted]</div>
     [% } %]
-    <div class="filename">[%= image.filename %]</div>
   </div>
 </template>
 

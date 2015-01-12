@@ -72,7 +72,11 @@ exports.json_all = function(req, res) {
 
 exports.json_one_by_id = function(req, res) {
   var image = Image.findById(req.params.image_id);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+  if (image) {
+    res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+  } else {
+    res.render('json/json.ejs', { layout: false, json: JSON.stringify(false) }); 
+  }
 };
 
 exports.json_delete_by_id = function(req, res) {

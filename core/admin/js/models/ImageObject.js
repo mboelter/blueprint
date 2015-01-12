@@ -27,7 +27,7 @@ ImageObject.prototype = {
       var ref = image_ref._ref;
       
       $.getJSON('/json/image/' + ref._item_id, function(image) {
-        self.addImageToImageGrid(image);
+        self.addImageToImageGrid(image, ref._item_id);
       });
     });
 
@@ -63,7 +63,7 @@ ImageObject.prototype = {
   },
   
   
-  addImageToImageGrid: function(image) {
+  addImageToImageGrid: function(image, imageId) {
     var self = this,
         imageHtml = new EJS({element: 'tmpl-image-grid-item'}).render({
           image: image, 
@@ -73,7 +73,15 @@ ImageObject.prototype = {
         }),
         $imageHtml = $(imageHtml);
 
-    $imageHtml.data('json', image);
+    if (image) {
+      $imageHtml.data('json', image);
+    } else {
+      // handle images that are "false", because they are still referenced, but are deleted from the Image Library.
+      // this hack allows the reference still to be deleted.
+      $imageHtml.data('json', {
+        _id: imageId,
+      });
+    }
         
     $imageHtml.find('.remove').click(function() {
       var $imageGridItem = $(this).parent('.image-grid-item');
