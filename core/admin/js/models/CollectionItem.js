@@ -33,7 +33,7 @@ CollectionItem.prototype = {
   bind: function() {
     var self = this;
     
-    this.$el.find('button[type="submit"]').click(function() {
+    this.$el.find('button[data-purpose="save"]').click(function() {
       if (self._id) {
         H.postJSON('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
           var toast = new Toast('Saved.');
@@ -41,6 +41,23 @@ CollectionItem.prototype = {
       } else {
         H.postJSON('/json/collection/' + self._collection_slug, self.toJSON(), function() {
           var toast = new Toast('Saved.');
+        });
+      }
+    });
+
+
+    this.$el.find('button[data-purpose="save-and-publish"]').click(function() {
+      if (self._id) {
+        H.postJSON('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
+          $.get('publish', function() {
+            var toast = new Toast('Saved &amp; Published.');
+          });
+        });
+      } else {
+        H.postJSON('/json/collection/' + self._collection_slug, self.toJSON(), function() {
+          $.get('publish', function() {
+            var toast = new Toast('Saved &amp; Published.');
+          });
         });
       }
     });

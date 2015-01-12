@@ -359,6 +359,10 @@
 
   <script type="text/javascript">
     var router = new Router();
+    
+    $(document).ajaxError(function() {
+      alert('Sorry, something went wrong with the AJAX request.');
+    });
   </script>
 </html>
 
@@ -484,7 +488,8 @@
   <div>
     <h1>[%= title %]</h1>
     <div class="fields"></div>
-    <button type="submit">Save</button>
+    <button class="btn btn-secondary" data-purpose="save">Save</button>
+    <button class="btn btn-primary" data-purpose="save-and-publish">Publish</button>
   </div>
 </template>
 
