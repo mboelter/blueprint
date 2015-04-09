@@ -38,8 +38,8 @@ Wysiwyg.prototype = {
         content_css : 'css/tinymce.css',
         selector: '#' + self._textAreaDomId,
         menubar : false,
-        plugins: 'link fullscreen paste',
-        toolbar: ['formatselect | bold italic underline strikethrough | bullist numlist blockquote | alignleft aligncenter alignright alignjustify | link | removeformat | fullscreen'],
+        plugins: 'link fullscreen paste code',
+        toolbar: ['formatselect | bold italic underline strikethrough | bullist numlist blockquote | alignleft aligncenter alignright alignjustify | link | removeformat | code | fullscreen'],
       });
     });
   },
