@@ -12,12 +12,22 @@ exports.json_all = function(req, res) {
 
 exports.json_create = function(req, res) {
   var item = req.body,
-      Collection = new DB(req.params.collection_slug);
+      Collection = new DB(req.params.collection_slug),
+      collections = Collection.findAll();
 
   if (!item._slug) {
     // TODO slug for collection item needs to be uniq!!!!!
     item._slug = helper.slug(item.title);
   }
+
+  // conflict of slug name, just keep adding underscores.....
+  collections.forEach(function(c) {
+    if (item._slug == c._slug) {
+      while (item._slug == c._slug) {
+        item._slug = item._slug + '_';
+      }
+    }
+  });
 
   Collection.save(item);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify(item) }); 

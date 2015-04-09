@@ -38,7 +38,7 @@ exports.json_create = function(req, res) {
 
   entity._slug = helper.slug(helper.pluralize(entity.title));
   
-  // conflict of slug name, just keep adding underscores.....
+  // conflict of slug name or collection slug name, just keep adding underscores.....
   var entities = Entity.findAll();
 
   entities.forEach(function(e) {
@@ -47,8 +47,15 @@ exports.json_create = function(req, res) {
         entity._slug = entity._slug + '_';
       }
     }
+
+    if (entity.collection_slug == e.collection_slug) {
+      while (entity.collection_slug == e.collection_slug) {
+        entity.collection_slug = entity.collection_slug + '_';
+      }
+    }
   });
-    
+  
+        
   Entity.save(entity);
   res.render('json/json.ejs', { layout: false, json: JSON.stringify(entity) }); 
 };
