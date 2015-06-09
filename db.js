@@ -115,6 +115,20 @@ DB.prototype = {
     return false;
   },
   
+
+  updateById: function(id, json) {
+    for (var i = 0, len = this._collection.length; i < len; i++) {
+      if (id == this._collection[i]._id) {
+        this._collection.splice(i, 1, json);
+        this._writeDB();
+        
+        return json;
+      }
+    }
+    
+    return false;
+  },
+
   
   findAll: function() {
     return this._collection;

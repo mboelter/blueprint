@@ -89,6 +89,13 @@ exports.json_delete_by_id = function(req, res) {
 };
 
 
+exports.json_update_by_id = function(req, res) {
+  Image.updateById(req.params.image_id, req.body);
+  var image = Image.findById(req.params.image_id);
+  res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+};
+
+
 var createThumbnails = function(filename, settings, callback) {
   var counter = 0;
 

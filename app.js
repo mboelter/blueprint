@@ -58,6 +58,7 @@ app.post('/images/upload', ImageAdminController.create);
 app.get('/json/images', ImageAdminController.json_all);
 app.get('/json/image/:image_id', ImageAdminController.json_one_by_id);
 app.get('/json/image/:image_id/delete', ImageAdminController.json_delete_by_id);
+app.post('/json/image/:image_id/update', ImageAdminController.json_update_by_id);
 
 app.get('/admin/publish', PublishingController.publish);
 app.get('/admin/publish/download', PublishingController.downloadAsZip);

@@ -432,16 +432,16 @@
 <template id="tmpl-image-properties">
   <div>
     <label>Title:</label>
-    <input type="text" value="[%= title %]"><br>
+    <input data-property="title" type="text" value="[%= title %]"><br>
       
     <label>Caption</label>
-    <input type="text" value="[%= caption %]"><br>
+    <input data-property="caption" type="text" value="[%= caption %]"><br>
       
     <label>Alt Text</label>
-    <input type="text" value="[%= alt_text %]"><br>
+    <input data-property="alt_text" type="text" value="[%= alt_text %]"><br>
             
     <label>Description</label>
-    <textarea>[%= description %]</textarea><br>
+    <textarea data-property="description">[%= description %]</textarea><br>
   	
     <br>
     <button class="btn btn-primary" data-purpose="save">Save</button>
