@@ -82,7 +82,18 @@ ImageObject.prototype = {
         _id: imageId,
       });
     }
-        
+     
+    // bind edit
+    $imageHtml.find('.edit').click(function() {
+      var $imageGridItem = $(this).parent('.image-grid-item');
+  	  console.log('.edit from ImageObject.js');
+      return false;
+//      self.removeImageById($imageGridItem.data('json')._id);
+//      $imageGridItem.remove();
+    });
+
+     
+    // bind remove   
     $imageHtml.find('.remove').click(function() {
       var $imageGridItem = $(this).parent('.image-grid-item');
 

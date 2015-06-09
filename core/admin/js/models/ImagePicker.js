@@ -63,7 +63,12 @@ ImagePicker.prototype = {
       $itemHtml.addClass('selected');
     }
 
+    $itemHtml.find('.edit').click(function() {
+      console.log('edit in Image Picker');
+      return false;
+    });
 
+  	// bind click on image -> selected state
     $itemHtml.click(function() {
       if ($(this).hasClass('selected')) {
         var id = $(this).data('json')._id;

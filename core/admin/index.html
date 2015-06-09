@@ -196,14 +196,34 @@
         top: 0;
         right: 0;
         background-color: #dfdfdf;
-        padding: 5px;
         cursor: pointer;
         display: none;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 20px;
       }
 
       .image-grid-item:hover .remove {
-        display: block;
+        display: inline-block;
       }      
+
+      .image-grid-item .edit {
+        position: absolute;
+        top: 0;
+        right: 21px;
+        background-color: #dfdfdf;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 20px;
+        cursor: pointer;
+        display: none;
+      }
+      
+      .image-grid-item:hover .edit {
+        display: inline-block;
+      }          
       
       #popup {
         position: fixed;
@@ -589,6 +609,7 @@
       [% if (params.show_remove_link) { %]
       <span class="remove">X</span>
       [% } %]
+      <span class="edit"><i>i</i></span>
       <div class="filename">[%= image.filename %]</div>
     [% } else { %]
       <span class="remove">X</span>

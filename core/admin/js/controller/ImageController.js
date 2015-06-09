@@ -1,3 +1,6 @@
+/* global $ */
+/* global ImageUploader */
+/* global ImageController */
 ImageController = {
   list: function() {
     var self = this;
@@ -29,6 +32,8 @@ ImageController = {
         $imageHtml = $(imageHtml);
     
     $imageHtml.data('json', image_json);
+    
+    // bind remove button
     $imageHtml.find('.remove').click(function() {
       if (confirm('Delete this file from the Image Library?')) {
         var $imageGridItem = $(this).parent('.image-grid-item'),
@@ -41,6 +46,14 @@ ImageController = {
       };
     });
   
+    // bind edit button
+    $imageHtml.find('.edit').click(function() {
+      var $imageGridItem = $(this).parent('.image-grid-item'),
+          imageId = $imageGridItem.data('json')._id;
+      console.log('edit');
+    });
+
+
     $('#image-library').prepend($imageHtml);
   },
 
