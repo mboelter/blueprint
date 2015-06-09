@@ -9,6 +9,7 @@ var Markdown = function(json, data_json) {
   this.value = data_json[json.name] || '';
   
   this.$el = this.createEl();
+  this._editor = undefined;
   this.bind();
 };
 
@@ -33,21 +34,28 @@ Markdown.prototype = {
       self._textAreaDomId = H.getDomId();
       
       $(this).attr('id', self._textAreaDomId);
-      tinymce.init({
-        oninit : 'setPlainText',
-        content_css : 'css/tinymce.css',
-        selector: '#' + self._textAreaDomId,
-        menubar : false,
-        plugins: 'link fullscreen paste code',
-        toolbar: ['formatselect | bold italic underline strikethrough | bullist numlist blockquote | alignleft aligncenter alignright alignjustify | link | removeformat | code | fullscreen'],
-      });
+      
+      self._editor = CodeMirror.fromTextArea(document.getElementById(self._textAreaDomId), {
+        mode: 'markdown',
+        lineNumbers: false,
+        theme: "default",
+        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
+      });      
+      
+//      tinymce.init({
+//        oninit : 'setPlainText',
+//        content_css : 'css/tinymce.css',
+//        selector: '#' + self._textAreaDomId,
+//        menubar : false,
+//        plugins: 'link fullscreen paste code',
+//        toolbar: ['formatselect | bold italic underline strikethrough | bullist numlist blockquote | alignleft aligncenter alignright alignjustify | link | removeformat | code | fullscreen'],
+//      });
     });
   },
   
   
   toJSON: function() {
-    tinymce.triggerSave();
-    this.value = tinymce.get(this._textAreaDomId).getContent();
+    this.value = this._editor.getValue();
 
     return {
       name: this.name,
