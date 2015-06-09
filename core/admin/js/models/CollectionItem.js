@@ -81,6 +81,9 @@ CollectionItem.prototype = {
       case 'wysiwyg':
         this.addWysiwyg(entity_json, data_json);
         break;
+      case 'markdown':
+        this.addMarkdown(entity_json, data_json);
+        break;
       case 'image':
         this.addImage(entity_json, data_json);
         break;
@@ -119,6 +122,15 @@ CollectionItem.prototype = {
     this.$el.find('.fields').append(wysiwyg.$el);
   },
 
+
+  addMarkdown: function(entity_json, data_json) {
+    var self = this,
+        markdown = new Markdown(entity_json, data_json);
+        
+    this.fields.push(markdown);
+    this.$el.find('.fields').append(markdown.$el);
+  },
+  
 
   addImage: function(entity_json, data_json) {
     var self = this,

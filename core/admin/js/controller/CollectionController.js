@@ -20,6 +20,7 @@ CollectionController = {
       var item = new CollectionItem(entity);
       $('#collection-item-form').html(item.$el);
       item.$el.find('textarea.wysiwyg').trigger('loadTinyMCE');
+      item.$el.find('textarea.markdown').trigger('loadCodeMirror');
     });
   },
 
@@ -30,6 +31,7 @@ CollectionController = {
         var item = new CollectionItem(entity, collection_item);
         $('#collection-item-form').html(item.$el);
         item.$el.find('textarea.wysiwyg').trigger('loadTinyMCE');
+        item.$el.find('textarea.markdown').trigger('loadCodeMirror');
       });
     });
   }

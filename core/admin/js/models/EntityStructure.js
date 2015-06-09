@@ -78,6 +78,10 @@ EntityStructure.prototype = {
       self.addWysiwyg();
     });
 
+    this.$el.find('*[data-purpose="add-markdown"]').click(function() {
+      self.addMarkdown();
+    });
+
     this.$el.find('*[data-purpose="add-image"]').click(function() {
       self.addImage();
     });
@@ -113,6 +117,9 @@ EntityStructure.prototype = {
         break;
       case 'wysiwyg':
         this.addWysiwyg(json);
+        break;
+      case 'markdown':
+        this.addMarkdown(json);
         break;
       case 'image':
         this.addImage(json);
@@ -168,6 +175,20 @@ EntityStructure.prototype = {
     this.$el.find('.fields').append(wysiwyg.$el);
   },
 
+  addMarkdown: function(json) {
+    var self = this,
+        markdown = new MarkdownStructure(json),
+        idx = this.fields.length;
+
+    markdown.onRemove(function() {
+      self.fields[idx] = undefined; // mark field as removed
+      markdown.$el.remove();
+    });
+
+    this.fields.push(markdown);
+    this.$el.find('.fields').append(markdown.$el);
+  },
+  
   addImage: function(json) {
     var self = this,
         img = new ImageStructure(json),

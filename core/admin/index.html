@@ -388,13 +388,15 @@
   <script src="js/models/EntityStructure.js"></script>  
   <script src="js/models/TextfieldStructure.js"></script>  
   <script src="js/models/TextareaStructure.js"></script>  
-  <script src="js/models/WysiwygStructure.js"></script>  
+  <script src="js/models/WysiwygStructure.js"></script> 
+  <script src="js/models/MarkdownStructure.js"></script> 
   <script src="js/models/ImageStructure.js"></script>  
   <script src="js/models/RelationshipStructure.js"></script>  
   <script src="js/models/CollectionItem.js"></script>  
   <script src="js/models/Textfield.js"></script>  
   <script src="js/models/Textarea.js"></script>  
-  <script src="js/models/Wysiwyg.js"></script>  
+  <script src="js/models/Wysiwyg.js"></script>
+  <script src="js/models/Markdown.js"></script>
   <script src="js/models/ImageObject.js"></script>  
   <script src="js/models/Relationship.js"></script>  
 
@@ -477,6 +479,7 @@
     <a href="#" class="small" onclick="return false;" data-purpose="add-textfield">Add Text Field</a><br>
     <a href="#" class="small" onclick="return false;" data-purpose="add-textarea">Add Text Area</a><br>
     <a href="#" class="small" onclick="return false;" data-purpose="add-wysiwyg">Add Rich Text Editor</a><br>
+    <a href="#" class="small" onclick="return false;" data-purpose="add-markdown">Add Markdown Editor</a><br>
     <a href="#" class="small" onclick="return false;" data-purpose="add-image">Add Image Object</a><br>
     <a href="#" class="small" onclick="return false;" data-purpose="add-relationship">Add Relationship</a><br>
     <hr>
@@ -534,6 +537,23 @@
     <input type="text" name="name" placeholder="" autocomplete="off" value="[%= name %]">
     <label>Placeholder</label>
     <textarea class="wysiwyg" name="placeholder" placeholder="" autocomplete="off">[%= placeholder %]</textarea>
+    <label>Hint</label>
+    <input type="text" name="hint" placeholder="" autocomplete="off" value="[%= hint %]">
+  </fieldset>
+</template>
+
+
+<template id="tmpl-markdown-structure">
+  <fieldset>
+    <hr>
+    <span class="right pointer" data-purpose="remove">X</span>
+    <h3>Markdown Editor</h3>
+    <label>Field Title</label>
+    <input type="text" name="title" placeholder="" autocomplete="off" value="[%= title %]">
+    <label>Field Name</label>
+    <input type="text" name="name" placeholder="" autocomplete="off" value="[%= name %]">
+    <label>Placeholder</label>
+    <textarea class="markdown" name="placeholder" placeholder="" autocomplete="off">[%= placeholder %]</textarea>
     <label>Hint</label>
     <input type="text" name="hint" placeholder="" autocomplete="off" value="[%= hint %]">
   </fieldset>
@@ -606,6 +626,15 @@
   <fieldset>
     <label>[%= title %]</label>
     <textarea class="wysiwyg" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off">[%= value %]</textarea>
+    <p class="small">[%= hint %]</p>
+  </fieldset>
+</template>
+
+
+<template id="tmpl-markdown">
+  <fieldset>
+    <label>[%= title %]</label>
+    <textarea class="markdown" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off">[%= value %]</textarea>
     <p class="small">[%= hint %]</p>
   </fieldset>
 </template>
