@@ -39,6 +39,7 @@ Markdown.prototype = {
         mode: 'markdown',
         lineNumbers: false,
         theme: "default",
+        lineWrapping: true,
         extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
       });      
       
