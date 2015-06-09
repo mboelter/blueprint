@@ -1,3 +1,4 @@
+/* global Toast */
 /* global H */
 /* global EJS */
 /* global ImagePropertiesController */
@@ -21,8 +22,6 @@ ImagePropertiesController = {
       self._imageJSON.alt_text = json.alt_text || '';
       self._imageJSON.caption = json.caption || '';
       self._imageJSON.description = json.description || '';
-
-      console.log(self._imageJSON);
       
       var imagePropertiesHtml = new EJS({element: 'tmpl-image-properties'}).render(self._imageJSON);
       
@@ -44,11 +43,10 @@ ImagePropertiesController = {
 
         // ... and update data on server
         H.postJSON('/json/image/' + self._imageId + '/update', self._imageJSON, function() {
+          var toast = new Toast('Saved.');
           self.hide();
         });
 
-        console.log(self._imageJSON);
-        console.log('save image properties...');
       });
     });
   },

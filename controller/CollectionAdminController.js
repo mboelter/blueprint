@@ -51,7 +51,6 @@ exports.json_delete_by_id = function(req, res) {
 
 
 exports.json_update = function(req, res) {
-  console.log('UUUpdate!');
   var Collection = new DB(req.params.collection_slug),
       collection_item = Collection.update(req.params.collection_item_id, req.body);
       
