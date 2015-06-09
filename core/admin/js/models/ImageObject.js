@@ -85,11 +85,13 @@ ImageObject.prototype = {
      
     // bind edit
     $imageHtml.find('.edit').click(function() {
-      var $imageGridItem = $(this).parent('.image-grid-item');
-  	  console.log('.edit from ImageObject.js');
+      var $imageGridItem = $(this).parent('.image-grid-item'),
+          imageId = $imageGridItem.data('json')._id;
+      
+      ImagePropertiesController.init(imageId);
+      ImagePropertiesController.show();
+      
       return false;
-//      self.removeImageById($imageGridItem.data('json')._id);
-//      $imageGridItem.remove();
     });
 
      

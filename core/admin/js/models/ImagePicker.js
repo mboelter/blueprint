@@ -64,7 +64,12 @@ ImagePicker.prototype = {
     }
 
     $itemHtml.find('.edit').click(function() {
-      console.log('edit in Image Picker');
+      var $imageGridItem = $(this).parent('.image-grid-item'),
+          imageId = $imageGridItem.data('json')._id;
+      
+      ImagePropertiesController.init(imageId);
+      ImagePropertiesController.show();
+      
       return false;
     });
 

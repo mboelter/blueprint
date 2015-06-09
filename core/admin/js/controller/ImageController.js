@@ -53,7 +53,6 @@ ImageController = {
       
       ImagePropertiesController.init(imageId);
       ImagePropertiesController.show();
-      console.log('edit');
     });
 
 
