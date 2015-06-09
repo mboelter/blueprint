@@ -327,6 +327,32 @@
         -webkit-transition: opacity 300ms;
       }
       
+      #blackout {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: black;
+        opacity: 0;
+        display: none;
+        transition: opacity 200ms;
+      }
+      
+      #image-property-editor {
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        width: 350px;
+        padding: 10px;
+        background-color: white;
+      }
+      
+      #image-property-editor span.close {
+        float: right;
+        cursor: pointer;
+      }
     </style>
   </head>
   
@@ -337,6 +363,9 @@
       <a href="publish/download">Download</a><br>
     </div>
     <div class="container"></div>
+    
+    <div id="blackout"></div>
+    
     <div id="popup">
       <span id="popup-close">X</span>
       <div id="popup-content"></div>
@@ -375,6 +404,7 @@
   <script src="js/controller/CollectionController.js"></script>
   <script src="js/controller/ImageController.js"></script>
   <script src="js/controller/JsonApiController.js"></script>
+  <script src="js/controller/ImagePropertiesController.js"></script>
 
 
   <script type="text/javascript">
@@ -386,6 +416,13 @@
   </script>
 </html>
 
+
+<template id="tmpl-image-property-editor">
+  <div id="image-property-editor">
+    <span class="close">X</span>
+    <h1>Image Properties</h1>
+  </div>
+</template>
 
 
 <template id="tmpl-entity">

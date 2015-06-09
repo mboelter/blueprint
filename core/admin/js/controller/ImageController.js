@@ -50,6 +50,9 @@ ImageController = {
     $imageHtml.find('.edit').click(function() {
       var $imageGridItem = $(this).parent('.image-grid-item'),
           imageId = $imageGridItem.data('json')._id;
+      
+      ImagePropertiesController.init();
+      ImagePropertiesController.show();
       console.log('edit');
     });
 
