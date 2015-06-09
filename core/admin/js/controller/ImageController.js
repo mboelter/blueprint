@@ -51,7 +51,7 @@ ImageController = {
       var $imageGridItem = $(this).parent('.image-grid-item'),
           imageId = $imageGridItem.data('json')._id;
       
-      ImagePropertiesController.init();
+      ImagePropertiesController.init(imageId);
       ImagePropertiesController.show();
       console.log('edit');
     });
