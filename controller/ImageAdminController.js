@@ -1,9 +1,12 @@
+/* global __dirname */
+
 var DB = require('../db.js'),
     fs = require('fs'),
     Image = new DB('Image'),
     gm = require('gm'),
     helper = require('../helper.js'),
-    pathPrefix = __dirname + '/../bp-content/images'; // NEVER have a trailing slash!
+    path = require('path'),
+    pathPrefix = path.join(__dirname, '/../bp-content/images'); // NEVER have a trailing slash!
 
 exports.create = function(req, res) {
   var fstream;
@@ -11,14 +14,14 @@ exports.create = function(req, res) {
   req.pipe(req.busboy);
   req.busboy.on('file', function (fieldname, file, filename) {
     if (!fs.existsSync(pathPrefix)) {
-      fs.mkdirSync(pathPrefix)
+      fs.mkdirSync(pathPrefix);
     }
 
     if (!fs.existsSync(pathPrefix + '/original')) {
-      fs.mkdirSync(pathPrefix + '/original')
+      fs.mkdirSync(pathPrefix + '/original');
     }
 
-    var path = pathPrefix + '/original/' + filename;
+    var filepath = pathPrefix + '/original/' + filename;
     
     // dont overwrite existing files, append _ to filename, but before the extension
     // filename.jpg will become filename_.jpg
@@ -26,10 +29,10 @@ exports.create = function(req, res) {
       var arr = filename.split('.');
       arr[arr.length - 2] = arr[arr.length - 2] + '_';
       filename = arr.join('.');
-      path = pathPrefix + '/original/' + filename;
+      filepath = pathPrefix + '/original/' + filename;
     }
 
-    var settings = JSON.parse(fs.readFileSync('./bp-settings.json')),
+    var settings = JSON.parse(fs.readFileSync(path.join(__dirname, '../bp-settings.json'))),
         json = {
           _slug: helper.slug(filename),
           title: filename,
@@ -52,12 +55,12 @@ exports.create = function(req, res) {
     
     var image = Image.save(json);
     
-    fstream = fs.createWriteStream(path);
+    fstream = fs.createWriteStream(filepath);
     file.pipe(fstream);
     
     fstream.on('close', function () {
       createThumbnails(filename, settings, function() {
-        res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+        res.json(image);
       });
     });
   });
@@ -66,33 +69,33 @@ exports.create = function(req, res) {
 
 exports.json_all = function(req, res) {
   var images = Image.findAll();
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(images) }); 
+  res.json(images);
 };
 
 
 exports.json_one_by_id = function(req, res) {
   var image = Image.findById(req.params.image_id);
   if (image) {
-    res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+    res.json(image);
   } else {
-    res.render('json/json.ejs', { layout: false, json: JSON.stringify(false) }); 
+    res.json(false);
   }
 };
 
 exports.json_delete_by_id = function(req, res) {
   var img = Image.findById(req.params.image_id),
-      path = __dirname + '/../bp-content/' + img.uri;
+      filepath = __dirname + '/../bp-content/' + img.uri;
       
-  fs.unlinkSync(path);
+  fs.unlinkSync(filepath);
   Image.delete(req.params.image_id);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify({}) }); 
+  res.json({});
 };
 
 
 exports.json_update_by_id = function(req, res) {
   Image.updateById(req.params.image_id, req.body);
   var image = Image.findById(req.params.image_id);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(image) }); 
+  res.json(image);
 };
 
 

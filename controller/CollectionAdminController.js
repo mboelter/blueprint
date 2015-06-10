@@ -5,8 +5,8 @@ var DB = require('../db.js'),
 exports.json_all = function(req, res) {
   var Collection = new DB(req.params.collection_slug),
       collection_items = Collection.findAll();
-      
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(collection_items) }); 
+  
+  res.json(collection_items);    
 };
 
 
@@ -30,15 +30,15 @@ exports.json_create = function(req, res) {
   });
 
   Collection.save(item);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(item) }); 
+  res.json(item);
 };
 
 
 exports.json_one_by_id = function(req, res) {
   var Collection = new DB(req.params.collection_slug),
       collection_item = Collection.findById(req.params.collection_item_id);
-      
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(collection_item) }); 
+  
+  res.json(collection_item);    
 };
 
 
@@ -46,13 +46,13 @@ exports.json_delete_by_id = function(req, res) {
   var Collection = new DB(req.params.collection_slug);
 
   Collection.delete(req.params.collection_item_id);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify({}) }); 
+  res.json({});
 };
 
 
 exports.json_update = function(req, res) {
   var Collection = new DB(req.params.collection_slug),
       collection_item = Collection.update(req.params.collection_item_id, req.body);
-      
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(collection_item) }); 
+  
+  res.json(collection_item);    
 };

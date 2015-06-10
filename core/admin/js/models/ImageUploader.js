@@ -8,7 +8,7 @@ ImageUploader = function($html, callback) {
     type: 'POST',
     data: formData,
     success: function (data) {
-      callback(JSON.parse(data));
+      callback(data);
     },
     cache: false,
     contentType: false,

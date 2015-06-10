@@ -5,12 +5,12 @@ var DB = require('../db.js'),
 
 exports.json_all = function(req, res) {
   var entities = Entity.findAll();
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(entities) }); 
+  res.json(entities);
 };
 
 exports.json_one_by_id = function(req, res) {
   var entity = Entity.findBySlug(req.params.slug);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(entity) }); 
+  res.json(entity);
 };
 
 exports.json_delete_by_slug = function(req, res) {
@@ -20,13 +20,13 @@ exports.json_delete_by_slug = function(req, res) {
   collection.destroy();
 
   Entity.deleteBySlug(req.params.slug);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify({}) }); 
+  res.json({});
 };
 
 exports.json_update_by_slug = function(req, res) {
-  var entity = Entity.findBySlug(req.params.slug);
   Entity.updateBySlug(req.params.slug, req.body);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(entity) }); 
+  var entity = Entity.findBySlug(req.params.slug);
+  res.json(entity);
 };
 
 exports.json_create = function(req, res) {
@@ -57,5 +57,5 @@ exports.json_create = function(req, res) {
   
         
   Entity.save(entity);
-  res.render('json/json.ejs', { layout: false, json: JSON.stringify(entity) }); 
+  res.json(entity);
 };

@@ -1,5 +1,7 @@
+/* global __dirname */
 var DB = require('../db.js'),
     beautify = require('js-beautify').js_beautify,
+    path = require('path'),
     fs = require('fs');
 
 
@@ -9,7 +11,7 @@ var resolve_references = function(items, depth) {
   
   // some safeguard for circular references.
   if (depth == 10) {
-    console.log('WARNING: PublishingController.resolve_references(): Depth too deep, no resolving anymore.')
+    console.log('WARNING: PublishingController.resolve_references(): Depth too deep, no resolving anymore.');
     return items;
   }
   
@@ -49,7 +51,7 @@ var resolve_references = function(items, depth) {
 
 exports.publish = function(req, res) {
   var spawn = require('child_process').spawn,
-      settings = JSON.parse(fs.readFileSync('./bp-settings.json')),
+      settings = JSON.parse(fs.readFileSync(path.join(__dirname, './bp-settings.json'))),
       command = spawn('sh', ['-c', settings.publish_hook]),
       stdout = '',
       stderr = '';
@@ -89,7 +91,7 @@ exports.publishedAll = function(req, res) {
     published[entity.collection_slug] = resolve_references(items);
   });
   
-  res.render('json/json.ejs', { layout: false, json: beautify(JSON.stringify(published)) }); 
+  res.json(published);
 };
 
 
@@ -98,13 +100,13 @@ exports.publishedCollection = function(req, res) {
       collection_items = Collection.findAll(),
       published_items = resolve_references(collection_items);
 
-  res.render('json/json.ejs', { layout: false, json: beautify(JSON.stringify(published_items)) }); 
+  res.json(published_items);
 };
 
 
 exports.downloadAsZip = function(req, res) {
   var spawn = require('child_process').spawn,
-      settings = JSON.parse(fs.readFileSync('./bp-settings.json')),
+      settings = JSON.parse(fs.readFileSync(path.join(__dirname, './bp-settings.json'))),
       command = spawn('sh', ['-c', settings.publish_package_hook]),
       stdout = '',
       stderr = '';
