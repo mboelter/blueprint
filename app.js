@@ -1,3 +1,4 @@
+/* global __dirname */
 var express = require('express'),
     partials = require('express-partials'),
     bodyParser = require('body-parser'), 
@@ -9,19 +10,21 @@ var express = require('express'),
     PublishingController = require('./controller/PublishingController'),
     busboy = require('connect-busboy'),
     helper = require('./helper'),
+    path = require('path'),
     fs = require('fs');
   
 
 // check if bp-settings.json exists
 // if not, copy over from bp-settings.json.sample
 
-if (!fs.existsSync('./bp-settings.json')) {
-  var settings = fs.readFileSync('./bp-settings.json.sample');
-  fs.writeFileSync('./bp-settings.json', settings);
+if (!fs.existsSync(path.join(__dirname, './bp-settings.json'))) {
+  console.log('No bp-settings.json file found, copying bp-settings.json.samle -> bp-settings.json');
+  var settings = fs.readFileSync(path.join(__dirname, './bp-settings.json.sample'));
+  fs.writeFileSync(path.join(__dirname, './bp-settings.json'), settings);
 };
 
 try {
-  var settings = JSON.parse(fs.readFileSync('./bp-settings.json'));
+  var settings = JSON.parse(fs.readFileSync(path.join(__dirname, './bp-settings.json')));
 } catch(e) {
   console.log('Error parsing bp-settings.json.');
   return;
@@ -65,5 +68,5 @@ app.get('/admin/publish/download', PublishingController.downloadAsZip);
 app.get('/json/published/all', PublishingController.publishedAll);
 app.get('/json/published/:collection_slug', PublishingController.publishedCollection);
 
-
+console.log('Listening on port', settings.port);
 app.listen(settings.port);
