@@ -39,9 +39,13 @@ Router = function() {
       var collection_slug = hash.split('/')[2],
           collection_item_id = hash.split('/')[4];
           
-      $.getJSON('/json/collection/' + collection_slug + '/delete/' + collection_item_id, function() {
+      if (confirm('Are you sure?')) {
+        $.getJSON('/json/collection/' + collection_slug + '/delete/' + collection_item_id, function() {
+          window.history.back();
+        });
+      } else {
         window.history.back();
-      });
+      }
     } else if (/^\/collection\/.+\/new$/.test(hash)) {
       var collection_slug = hash.split('/')[2];
       self.load('_collection_new_item.html', function() {
