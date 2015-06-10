@@ -42,11 +42,12 @@ CollectionItem.prototype = {
       } else {
         // create
         H.postJSON('/json/collection/' + self._collection_slug, self.toJSON(), function(item) {
-          var item = JSON.parse(item),
-              toast = new Toast('Saved.');
-              
           // redirect to edit              
           window.location.href = '#/collection/' + self._collection_slug + '/edit/' + item._id;
+          
+          setTimeout(function() {
+            var toast = new Toast('Saved.');
+          }, 200);
         });
       }
     });
