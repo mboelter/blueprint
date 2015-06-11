@@ -329,6 +329,7 @@
         opacity: 0;
         display: none;
         -webkit-transition: opacity 300ms;
+        transition: opacity 300ms;
       }
       
       #blackout {
@@ -372,7 +373,10 @@
     <ul id="sidebar"></ul>
     <div id="publish-container">
       <a href="publish" target="_blank">Publish</a><br><br>
-      <a href="publish/download">Download</a><br>
+      <a href="publish/download">Download</a><br><br>
+      <hr>
+      <br>
+      <a href="#/json_api">JSON API</a><br>
     </div>
     <div class="container"></div>
     
@@ -392,8 +396,9 @@
   <script src="js/lib/tinymce/tinymce.min.js"></script>
   <script src="js/lib/codemirror/lib/codemirror.js"></script>
   <script src="js/lib/codemirror/mode/markdown/markdown.js"></script>
+  <script src="js/lib/codemirror/mode/javascript/javascript.js"></script>
   <script src="js/lib/codemirror/addon/edit/continuelist.js"></script>  
-    
+  <script src="js/lib/beautify.js"></script>  
   
   <script src="js/helper.js"></script>
   
@@ -424,6 +429,7 @@
   <script src="js/controller/ImageController.js"></script>
   <script src="js/controller/JsonApiController.js"></script>
   <script src="js/controller/ImagePropertiesController.js"></script>
+  <script src="js/controller/SettingsController.js"></script>
 
 
   <script type="text/javascript">
@@ -788,7 +794,7 @@
       <a href="#/entities">Content Types</a>
     </li>
     <li>
-      <a href="#/json_api">JSON API</a>
+      <a href="#/settings">Settings</a>
     </li>
   </ul>
 </template>

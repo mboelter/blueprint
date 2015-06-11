@@ -1,5 +1,12 @@
+/* global SidebarController */
+/* global JsonApiController */
+/* global ImageController */
+/* global CollectionController */
+/* global Router */
+/* global EntityController */
 /* global EJS */
 /* global $ */
+
 Router = function() {
   var self = this;
 
@@ -9,7 +16,6 @@ Router = function() {
     if (hash == '') {
       self.load('_dashboard.html', function() {
         $.getJSON('/json/entities', function(entities) {
-          console.log(entities);
           new EJS({element: 'tmpl-dashboard-entity-list'}).update('dashboard-collections', {entities: entities});
         });        
       });
@@ -70,6 +76,10 @@ Router = function() {
     } else if (hash == '/json_api') {
       self.load('_json_api.html', function() {
         JsonApiController.list();
+      });
+    } else if (hash == '/settings') {
+      self.load('_settings.html', function() {
+        SettingsController.init();
       });
     } else {
       console.log('Router: Not found: ', hash);

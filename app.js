@@ -49,6 +49,16 @@ app.use('/', express.static(__dirname + '/bp-content/published'));
 
 
 
+app.get('/admin/settings.json', function(req, res) {
+  res.json(settings);  
+});
+
+app.post('/admin/settings.json', function(req, res) {
+  var settingsStr = req.body.settings;
+
+  fs.writeFileSync(path.join(__dirname, './bp-settings.json'), settingsStr);
+  res.json(JSON.parse(settingsStr));
+});
 
 app.get('/json/entities', EntityAdminController.json_all);
 app.get('/json/entity/:slug', EntityAdminController.json_one_by_id);
