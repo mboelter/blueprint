@@ -688,6 +688,15 @@
 </template>
 
 
+<template id="tmpl-dashboard-entity-list">
+  <div>
+    [% entities.forEach(function(entity) { %]
+      <li>
+        <a href="#/collection/[%= entity._slug %]">[%= entity.title || '[Untitled Content Type]'%]</a> 
+      </li>
+    [% }); %]
+  </div>
+</template>
 
 
 <template id="tmpl-entity-list-items">

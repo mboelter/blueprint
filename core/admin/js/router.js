@@ -1,3 +1,5 @@
+/* global EJS */
+/* global $ */
 Router = function() {
   var self = this;
 
@@ -5,7 +7,12 @@ Router = function() {
     var hash = location.hash.replace(/^\#/, '');
     
     if (hash == '') {
-      self.load('_dashboard.html');
+      self.load('_dashboard.html', function() {
+        $.getJSON('/json/entities', function(entities) {
+          console.log(entities);
+          new EJS({element: 'tmpl-dashboard-entity-list'}).update('dashboard-collections', {entities: entities});
+        });        
+      });
     } else if (hash == '/entities') {
       self.load('_entities.html', function() {
         EntityController.list();
