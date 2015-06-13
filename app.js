@@ -49,11 +49,11 @@ app.use('/', express.static(__dirname + '/public'));
 
 
 
-app.get('/admin/settings.json', function(req, res) {
+app.get('/admin/bp-settings.json', function(req, res) {
   res.json(settings);  
 });
 
-app.post('/admin/settings.json', function(req, res) {
+app.post('/admin/bp-settings.json', function(req, res) {
   var settingsStr = req.body.settings;
 
   fs.writeFileSync(path.join(__dirname, './bp-settings.json'), settingsStr);

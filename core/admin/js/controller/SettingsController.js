@@ -10,7 +10,7 @@ SettingsController = {
   init: function() {
     var self = this;
       
-    $.getJSON('/admin/settings.json', function(settings) {
+    $.getJSON('/admin/bp-settings.json', function(settings) {
       var settingsStr = js_beautify(JSON.stringify(settings));
       
       // populate textfield with settings.json to be used by CodeMirror
@@ -45,7 +45,7 @@ SettingsController = {
   },
   
   postSettings: function(settingsStr) {
-    $.post('/admin/settings.json', {settings: settingsStr}, function() {
+    $.post('/admin/bp-settings.json', {settings: settingsStr}, function() {
       new Toast('Saved');
     }, 'text');
   }
