@@ -6,7 +6,7 @@ var DB = require('../db.js'),
     gm = require('gm'),
     helper = require('../helper.js'),
     path = require('path'),
-    pathPrefix = path.join(__dirname, '/../bp-content/images'); // NEVER have a trailing slash!
+    pathPrefix = path.join(__dirname, '/../../../bp-content/images'); // NEVER have a trailing slash!
 
 exports.create = function(req, res) {
   var fstream;
@@ -32,7 +32,7 @@ exports.create = function(req, res) {
       filepath = pathPrefix + '/original/' + filename;
     }
 
-    var settings = JSON.parse(fs.readFileSync(path.join(__dirname, '../bp-settings.json'))),
+    var settings = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../bp-settings.json'))),
         json = {
           _slug: helper.slug(filename),
           title: filename,
@@ -84,7 +84,7 @@ exports.json_one_by_id = function(req, res) {
 
 exports.json_delete_by_id = function(req, res) {
   var img = Image.findById(req.params.image_id),
-      filepath = __dirname + '/../bp-content/' + img.uri;
+      filepath = __dirname + '/../../../bp-content/' + img.uri;
       
   fs.unlinkSync(filepath);
   Image.delete(req.params.image_id);

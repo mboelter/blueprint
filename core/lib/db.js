@@ -6,7 +6,7 @@ var fs = require('fs'),
 
 var DB = function(name) {
   this._name = name;
-  this._path = path.join(__dirname, 'bp-content/db/');
+  this._path = path.join(__dirname, '../../bp-content/db/');
   this._filename = path.join(this._path, name + '.json');
   this._collection = [];
   

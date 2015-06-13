@@ -51,7 +51,7 @@ var resolve_references = function(items, depth) {
 
 exports.publish = function(req, res) {
   var spawn = require('child_process').spawn,
-      settings = JSON.parse(fs.readFileSync(path.join(__dirname, '../bp-settings.json'))),
+      settings = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../bp-settings.json'))),
       command = spawn('sh', ['-c', settings.publish_hook]),
       stdout = '',
       stderr = '';
@@ -106,7 +106,7 @@ exports.publishedCollection = function(req, res) {
 
 exports.downloadAsZip = function(req, res) {
   var spawn = require('child_process').spawn,
-      settings = JSON.parse(fs.readFileSync(path.join(__dirname, '../bp-settings.json'))),
+      settings = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../bp-settings.json'))),
       command = spawn('sh', ['-c', settings.publish_package_hook]),
       stdout = '',
       stderr = '';
