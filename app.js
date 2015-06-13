@@ -44,10 +44,6 @@ app.use(busboy());
 app.use(partials());
 
 
-app.use('/admin/images', express.static(__dirname + '/bp-content/images'));
-app.use('/admin', express.static(__dirname + '/core/admin'));
-app.use('/', express.static(__dirname + '/public'));
-
 app.get('/admin/bp-settings.json', SettingsController.get);
 app.post('/admin/bp-settings.json', SettingsController.post);
 
@@ -63,7 +59,7 @@ app.get('/json/collection/:collection_slug/delete/:collection_item_id', Collecti
 app.post('/json/collection/:collection_slug/:collection_item_id', CollectionAdminController.json_update);
 app.post('/json/collection/:collection_slug', CollectionAdminController.json_create);
 
-app.post('/images/upload', ImageAdminController.create);
+app.post('/admin/images/upload', ImageAdminController.create);
 app.get('/json/images', ImageAdminController.json_all);
 app.get('/json/image/:image_id', ImageAdminController.json_one_by_id);
 app.get('/json/image/:image_id/delete', ImageAdminController.json_delete_by_id);
@@ -73,6 +69,11 @@ app.get('/admin/publish', PublishingController.publish);
 app.get('/admin/publish/download', PublishingController.downloadAsZip);
 app.get('/json/published/all', PublishingController.publishedAll);
 app.get('/json/published/:collection_slug', PublishingController.publishedCollection);
+
+app.use('/admin/images', express.static(__dirname + '/bp-content/images'));
+app.use('/admin', express.static(__dirname + '/core/admin'));
+app.use('/', express.static(__dirname + '/public'));
+
 
 console.log('Listening on port', settings.port);
 app.listen(settings.port);
