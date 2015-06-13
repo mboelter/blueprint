@@ -45,7 +45,7 @@ app.use(partials());
 
 app.use('/admin/images', express.static(__dirname + "/bp-content/images"));
 app.use('/admin', express.static(__dirname + "/core/admin"));
-app.use('/', express.static(__dirname + '/bp-content/published'));
+app.use('/', express.static(__dirname + '/public'));
 
 
 
