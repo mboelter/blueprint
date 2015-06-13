@@ -1,6 +1,5 @@
 /* global __dirname */
 var DB = require('../db.js'),
-    beautify = require('js-beautify').js_beautify,
     path = require('path'),
     fs = require('fs');
 

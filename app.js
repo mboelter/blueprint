@@ -1,6 +1,5 @@
 /* global __dirname */
 var express = require('express'),
-    partials = require('express-partials'),
     bodyParser = require('body-parser'), 
     compression = require('compression'),
     app = express(),
@@ -41,7 +40,6 @@ if (settings.httpauth_username && settings.httpauth_password) {
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.json()); // for parsing json
 app.use(busboy()); 
-app.use(partials());
 
 
 app.get('/admin/bp-settings.json', SettingsController.get);
