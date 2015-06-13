@@ -8,6 +8,7 @@ var express = require('express'),
     CollectionAdminController = require('./core/lib/controller/CollectionAdminController'),
     ImageAdminController = require('./core/lib/controller/ImageAdminController'),
     PublishingController = require('./core/lib/controller/PublishingController'),
+    SettingsController = require('./core/lib/controller/SettingsController'),
     busboy = require('connect-busboy'),
     helper = require('./core/lib/helper'),
     path = require('path'),
@@ -43,22 +44,12 @@ app.use(busboy());
 app.use(partials());
 
 
-app.use('/admin/images', express.static(__dirname + "/bp-content/images"));
-app.use('/admin', express.static(__dirname + "/core/admin"));
+app.use('/admin/images', express.static(__dirname + '/bp-content/images'));
+app.use('/admin', express.static(__dirname + '/core/admin'));
 app.use('/', express.static(__dirname + '/public'));
 
-
-
-app.get('/admin/bp-settings.json', function(req, res) {
-  res.json(settings);  
-});
-
-app.post('/admin/bp-settings.json', function(req, res) {
-  var settingsStr = req.body.settings;
-
-  fs.writeFileSync(path.join(__dirname, './bp-settings.json'), settingsStr);
-  res.json(JSON.parse(settingsStr));
-});
+app.get('/admin/bp-settings.json', SettingsController.get);
+app.post('/admin/bp-settings.json', SettingsController.post);
 
 app.get('/json/entities', EntityAdminController.json_all);
 app.get('/json/entity/:slug', EntityAdminController.json_one_by_id);
