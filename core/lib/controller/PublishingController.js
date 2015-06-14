@@ -10,7 +10,7 @@ var resolve_references = function(items, depth) {
   
   // some safeguard for circular references.
   if (depth == 10) {
-    console.log('WARNING: PublishingController.resolve_references(): Depth too deep, no resolving anymore.');
+    console.log('WARNING: PublishingController.resolve_references(): Depth too deep, not resolving anymore.');
     return items;
   }
   
@@ -45,6 +45,16 @@ var resolve_references = function(items, depth) {
   return item;
 };
 
+
+var arrayToObjectBySlug = function(items) {
+  var result = {};
+  
+  items.forEach(function(item) {
+    result[item._slug] = item;
+  });
+ 
+  return result;
+};
 
 
 
@@ -86,11 +96,17 @@ exports.publishedAll = function(req, res) {
   entities.forEach(function(entity) {
     var db = new DB(entity._slug),
         items = db.findAll();
-    
+
+    // URL: ?inlineRelationships=[yes|no]
     if (req.query.inlineRelationships == 'yes' || req.query.inlineRelationships === undefined) {
       published[entity.collection_slug] = resolve_references(items);
     } else {
       published[entity.collection_slug] = items;
+    }
+
+    // URL: ?collectionsAs=[array|object]
+    if (req.query.collectionsAs && req.query.collectionsAs == 'object') {
+      published[entity.collection_slug] = arrayToObjectBySlug(published[entity.collection_slug]);
     }
   });
   
@@ -103,12 +119,17 @@ exports.publishedCollection = function(req, res) {
       collection_items = Collection.findAll(),
       published_items = undefined;
   
+  // URL: ?inlineRelationships=[yes|no]
   if (req.query.inlineRelationships == 'yes' || req.query.inlineRelationships === undefined) {
     published_items = resolve_references(collection_items);
   } else {
     published_items = collection_items;
   }
   
+  // URL: ?collectionsAs=[array|object]
+  if (req.query.collectionsAs && req.query.collectionsAs == 'object') {
+    published_items = arrayToObjectBySlug(published_items);
+  }  
   res.json(published_items);
 };
 
