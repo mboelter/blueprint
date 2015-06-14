@@ -41,8 +41,6 @@ JsonApiController = {
         url = url + '?' + paramsStr;
       }
       
-      console.log(collectionAs);
-      console.log(inlineRelationships);
       $url.val(url);
       
       $.getJSON(url, function(json) {
