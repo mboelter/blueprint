@@ -36,6 +36,9 @@ exports.create = function(req, res) {
         json = {
           _slug: helper.slug(filename),
           title: filename,
+          caption: '',
+          alt_text: '',
+          description: '',
           filename: filename,
           uri: 'images/original/' + filename,
           thumbnails: {}
@@ -50,7 +53,7 @@ exports.create = function(req, res) {
         width: thumbnailConfig.width,
         height: thumbnailConfig.height,
         mode: thumbnailConfig.mode
-      }
+      };
     });    
     
     var image = Image.save(json);
@@ -127,11 +130,11 @@ var createThumbnail = function(filename, thumbnailConfig, callback) {
       output = pathPrefix + '/thumbnails/' + slug + '/' + filename;;
 
   if (!fs.existsSync(pathPrefix + '/thumbnails/')) {
-    fs.mkdirSync(pathPrefix + '/thumbnails/')
+    fs.mkdirSync(pathPrefix + '/thumbnails/');
   }
   
   if (!fs.existsSync(pathPrefix + '/thumbnails/' + slug)) {
-    fs.mkdirSync(pathPrefix + '/thumbnails/' + slug)
+    fs.mkdirSync(pathPrefix + '/thumbnails/' + slug);
   }
 
   switch(thumbnailConfig.mode) {
