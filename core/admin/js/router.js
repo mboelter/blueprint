@@ -1,3 +1,4 @@
+/* global SettingsController */
 /* global SidebarController */
 /* global JsonApiController */
 /* global ImageController */
@@ -76,6 +77,7 @@ Router = function() {
     } else if (hash == '/json_api') {
       self.load('_json_api.html', function() {
         JsonApiController.list();
+        JsonApiController.explorer();
       });
     } else if (hash == '/settings') {
       self.load('_settings.html', function() {

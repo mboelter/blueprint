@@ -2,13 +2,40 @@
 <hr>
 
 
+
+
+<div id="admin-json-api-explorer">
+  Collection:
+  <select data-purpose="collection">
+    <option value="all">All</option>
+  </select>
+
+  &nbsp;&nbsp;Collections as:
+  <select>
+    <option>Array</option>
+    <option>Object</option>
+  </select>
+  
+  &nbsp;&nbsp;Inline relationships:
+  <select>
+    <option>Yes</option>
+    <option>No</option>
+  </select>
+  
+  <br><br>
+    
+  Url: <input readonly="readonly" data-purpose="url" type="text">
+  <br><br>
+  
+  JSON:
+  <textarea data-purpose="result" wrap="off"></textarea>    
+</div> <!-- #admin-json-api-explorer -->
+
+<br>
+
+<h3>Quick links:</h3>
 <ul id="json_api_endpoints">
   <li>
     <a href="/json/published/all" target="_blank">/json/published/all</a>
   </li>
 </ul>
-
-<p class="small">
-  Each API endpoint is independent of the publishing pipeline and therefor
-  always up to date with the content of the actual database.
-</p>
