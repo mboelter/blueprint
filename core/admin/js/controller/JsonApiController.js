@@ -19,15 +19,32 @@ JsonApiController = {
   
   explorer: function() {
     var $el = $('#admin-json-api-explorer'),
-        $btnRun = $el.find('*[data-purpose="run"]'),
         $url = $el.find('*[data-purpose="url"]');
         
     $el.find('select').bind('change', function() {
       var $result = $el.find('*[data-purpose="result"]'),
           collectionSlug = $el.find('select[data-purpose="collection"]').val(),
-          url = '/json/published/' + collectionSlug;
+          collectionAs = $el.find('select[data-purpose="collection-as"]').val(),
+          inlineRelationships = $el.find('select[data-purpose="inline-relationships"]').val(),
+          url = '/json/published/' + collectionSlug,
+          paramsStr = '';
       
+      if (collectionAs != 'array') {
+        paramsStr += 'collectionsAs=' + collectionAs;
+      }
+      
+      if (inlineRelationships != 'yes') {
+        paramsStr += '&inlineRelationships=' + inlineRelationships;        
+      }
+      
+      if (paramsStr.length > 0) {
+        url = url + '?' + paramsStr;
+      }
+      
+      console.log(collectionAs);
+      console.log(inlineRelationships);
       $url.val(url);
+      
       $.getJSON(url, function(json) {
         var result = JSON.stringify(json); 
         result = js_beautify(result);
@@ -37,6 +54,6 @@ JsonApiController = {
     });     
     
     // fill the text field on page load
-    $el.find('select').trigger('change');
+    $el.find('select').first().trigger('change');
   },
 };

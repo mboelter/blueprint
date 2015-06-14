@@ -1,38 +1,39 @@
 <h2>JSON API</h2>
 <hr>
 
-
+<br>
 
 
 <div id="admin-json-api-explorer">
+  Url: <input readonly="readonly" data-purpose="url" type="text">
+  <br><br>
+  
+  JSON:
+  <textarea data-purpose="result" wrap="off"></textarea>    
+  
+  <br><br>
+  
   Collection:
   <select data-purpose="collection">
     <option value="all">All</option>
   </select>
 
   &nbsp;&nbsp;Collections as:
-  <select>
-    <option>Array</option>
-    <option>Object</option>
+  <select data-purpose="collection-as">
+    <option value="array">Array</option>
+    <option value="object">Object</option>
   </select>
   
   &nbsp;&nbsp;Inline relationships:
-  <select>
-    <option>Yes</option>
-    <option>No</option>
+  <select data-purpose="inline-relationships">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
   </select>
-  
-  <br><br>
-    
-  Url: <input readonly="readonly" data-purpose="url" type="text">
-  <br><br>
-  
-  JSON:
-  <textarea data-purpose="result" wrap="off"></textarea>    
 </div> <!-- #admin-json-api-explorer -->
 
 <br>
-
+<hr>
+  
 <h3>Quick links:</h3>
 <ul id="json_api_endpoints">
   <li>
