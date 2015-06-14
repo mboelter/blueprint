@@ -87,7 +87,11 @@ exports.publishedAll = function(req, res) {
     var db = new DB(entity._slug),
         items = db.findAll();
     
-    published[entity.collection_slug] = resolve_references(items);
+    if (req.query.inlineRelationships == 'yes' || req.query.inlineRelationships === undefined) {
+      published[entity.collection_slug] = resolve_references(items);
+    } else {
+      published[entity.collection_slug] = items;
+    }
   });
   
   res.json(published);
@@ -97,8 +101,14 @@ exports.publishedAll = function(req, res) {
 exports.publishedCollection = function(req, res) {
   var Collection = new DB(req.params.collection_slug),
       collection_items = Collection.findAll(),
-      published_items = resolve_references(collection_items);
-
+      published_items = undefined;
+  
+  if (req.query.inlineRelationships == 'yes' || req.query.inlineRelationships === undefined) {
+    published_items = resolve_references(collection_items);
+  } else {
+    published_items = collection_items;
+  }
+  
   res.json(published_items);
 };
 
