@@ -25,7 +25,7 @@ exports.create = function(req, res) {
     
     // dont overwrite existing files, append _ to filename, but before the extension
     // filename.jpg will become filename_.jpg
-    while(fs.existsSync(path)) {
+    while(fs.existsSync(filepath)) {
       var arr = filename.split('.');
       arr[arr.length - 2] = arr[arr.length - 2] + '_';
       filename = arr.join('.');
