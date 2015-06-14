@@ -70,6 +70,13 @@ app.get('/json/published/:collection_slug', PublishingController.publishedCollec
 
 app.use('/admin/images', express.static(__dirname + '/bp-content/images'));
 app.use('/admin', express.static(__dirname + '/core/admin'));
+
+if (!fs.existsSync(path.join(__dirname, './public/index.html'))) {
+  app.get('/', function(req, res) {
+    var html = fs.readFileSync(path.join(__dirname, './core/seeds/public/index.html'));
+    res.set('Content-Type', 'text/html').status(200).send(html);
+  });
+}
 app.use('/', express.static(__dirname + '/public'));
 
 
