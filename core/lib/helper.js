@@ -1,7 +1,14 @@
 var basicAuth = require('basic-auth');
 
 module.exports.slug = function(s) {
-  return s.toLowerCase().replace(/ /g,'_').replace(/[^\w-]+/g,'');
+  var slug = s.toLowerCase().replace(/ /g,'_').replace(/[^\w-]+/g,'');
+  
+  // prevent returning back an empty string
+  if (slug.length == 0) {
+    slug = '_';
+  }
+  
+  return slug;
 };
 
 // from http://www.danielstjules.com/2014/08/03/basic-auth-with-express-4/
