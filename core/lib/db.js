@@ -2,7 +2,8 @@
 
 var fs = require('fs'),
     path = require('path'),
-    helper = require('./helper.js');
+    helper = require('./helper.js'),
+    moment = require('moment');
 
 var DB = function(name) {
   this._name = name;
@@ -56,6 +57,12 @@ DB.prototype = {
   
   
   save: function(json) {
+    if (!json._created_at) {
+      json._created_at = moment().toJSON();
+    }
+
+    json._updated_at = moment().toJSON();
+    
     if (!json._id) {
       json._id = this._UUID();
       this._collection.push(json);      
@@ -92,6 +99,8 @@ DB.prototype = {
   
   
   update: function(id, json) {
+    json._updated_at = moment().toJSON();
+    
     for (var i = 0, len = this._collection.length; i < len; i++) {
       if (id == this._collection[i]._id) {
         this._collection.splice(i, 1, json);
@@ -106,6 +115,8 @@ DB.prototype = {
 
 
   updateBySlug: function(slug, json) {
+    json._updated_at = moment().toJSON();
+    
     for (var i = 0, len = this._collection.length; i < len; i++) {
       if (slug == this._collection[i]._slug) {
         this._collection.splice(i, 1, json);
@@ -120,6 +131,8 @@ DB.prototype = {
   
 
   updateById: function(id, json) {
+    json._updated_at = moment().toJSON();    
+    
     for (var i = 0, len = this._collection.length; i < len; i++) {
       if (id == this._collection[i]._id) {
         this._collection.splice(i, 1, json);
