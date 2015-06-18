@@ -365,6 +365,36 @@
         padding: 10px;
         max-width: 100%;
       }
+      
+      #loadingbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #2C9BE6;
+        animation: shift-rightwards 1s infinite;
+        animation-timing-function: ease-in-out;
+        display: none;
+      }
+      
+      @keyframes shift-rightwards {
+        0% {
+          transform:translateX(-100%)
+        }
+        
+        40% {
+          transform:translateX(0)
+        }
+        
+        60% {
+          transform:translateX(0)
+        }
+        
+        100% {
+          transform:translateX(100%)
+        }
+      }         
     </style>
     
     <link rel="stylesheet" href="js/lib/codemirror/lib/codemirror.css">
@@ -389,6 +419,7 @@
     <div id="blackout"></div>
       
     <div id="toast">Saved!</div>
+    <div id="loadingbar"></div>
   </body>
   
   <script src="js/lib/ejs_0.9_alpha_1_production.js"></script>
@@ -436,9 +467,13 @@
   <script type="text/javascript">
     var router = new Router();
     
-    $(document).ajaxError(function() {
+    $(document).bind('ajaxSend', function() {
+      H.loadingbar.inc();
+    }).bind('ajaxComplete', function() {
+      H.loadingbar.dec();
+    }).bind('ajaxError', function() {
       alert('Sorry, something went wrong with the AJAX request.');
-    });
+    });  
   </script>
 </html>
 

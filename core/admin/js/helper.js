@@ -1,5 +1,8 @@
+/* global $ */
+/* global H */
 H = {
   _domIddCounter: 0,
+  _ajaxInProgressCounter: 0,
   
   getDomId: function() {
     return 'dom-id-' + this._domIddCounter++;
@@ -29,5 +32,21 @@ H = {
     });
     
     return byName;
-  },  
+  },
+  
+  loadingbar: {
+    inc: function() {
+      H._ajaxInProgressCounter++;
+      $('#loadingbar').show();
+    },
+    
+    dec: function() {
+      H._ajaxInProgressCounter--;
+      
+      if (H._ajaxInProgressCounter <= 0) {
+        H._ajaxInProgressCounter = 0;
+        $('#loadingbar').hide();
+      }
+    }
+  } // loadingbar
 };
