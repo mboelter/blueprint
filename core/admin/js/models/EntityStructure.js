@@ -90,6 +90,9 @@ EntityStructure.prototype = {
       self.addRelationship();
     });
 
+    this.$el.find('*[data-purpose="add-separator"]').click(function() {
+      self.addSeparator();
+    });
 
     this.$el.find('button[type="submit"]').click(function() {
       if (self._id) {
@@ -126,6 +129,9 @@ EntityStructure.prototype = {
         break;
       case 'relationship':
         this.addRelationship(json);
+        break;
+      case 'separator':
+        this.addSeparator(json);
         break;
       default:
         console.log('Entity.addField(): Dont know what to do with:', json);
@@ -217,7 +223,22 @@ EntityStructure.prototype = {
     this.$el.find('.fields').append(relationship.$el);
   },
 
-  
+
+  addSeparator: function(json) {
+    var self = this,
+        separator = new SeparatorStructure(json),
+        idx = this.fields.length;
+
+    separator.onRemove(function() {
+      self.fields[idx] = undefined; // mark field as removed
+      separator.$el.remove();
+    });
+
+    this.fields.push(separator);
+    this.$el.find('.fields').append(separator.$el);
+  },
+
+
   toJSON: function() {
     var json = {};
 
@@ -245,4 +266,4 @@ EntityStructure.prototype = {
     
     return json;
   }
-}
+};

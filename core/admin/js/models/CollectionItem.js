@@ -91,6 +91,9 @@ CollectionItem.prototype = {
       case 'relationship':
         this.addRelationship(entity_json, data_json);
         break;
+      case 'separator':
+        this.addSeparator(entity_json, data_json);
+        break;
       default:
         console.log('CollectionItem.addField(): Dont know what to do with:', entity_json, data_json);
         break;
@@ -150,6 +153,14 @@ CollectionItem.prototype = {
     this.$el.find('.fields').append(relationship.$el);
   },
 
+
+  addSeparator: function(entity_json, data_json) {
+    var self = this,
+        separator = new Separator(entity_json, data_json);
+
+    this.fields.push(separator);
+    this.$el.find('.fields').append(separator.$el);
+  },
 
   
   toJSON: function() {

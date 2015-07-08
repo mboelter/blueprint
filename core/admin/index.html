@@ -461,6 +461,7 @@
   <script src="js/models/MarkdownStructure.js"></script> 
   <script src="js/models/ImageStructure.js"></script>  
   <script src="js/models/RelationshipStructure.js"></script>  
+  <script src="js/models/SeparatorStructure.js"></script>  
   <script src="js/models/CollectionItem.js"></script>  
   <script src="js/models/Textfield.js"></script>  
   <script src="js/models/Textarea.js"></script>  
@@ -468,7 +469,8 @@
   <script src="js/models/Markdown.js"></script>
   <script src="js/models/ImageObject.js"></script>  
   <script src="js/models/Relationship.js"></script>  
-
+  <script src="js/models/Separator.js"></script>  
+  
   <script src="js/models/ImagePicker.js"></script>  
   <script src="js/models/ImageUploader.js"></script>  
 
@@ -558,6 +560,7 @@
     <a href="#" class="small" onclick="return false;" data-purpose="add-markdown">Add Markdown Editor</a><br>
     <a href="#" class="small" onclick="return false;" data-purpose="add-image">Add Image Object</a><br>
     <a href="#" class="small" onclick="return false;" data-purpose="add-relationship">Add Relationship</a><br>
+    <a href="#" class="small" onclick="return false;" data-purpose="add-separator">Add Separator</a><br>
     <hr>
     <button type="submit">Save</button>
   </div>
@@ -581,6 +584,17 @@
     <input type="text" name="placeholder" placeholder="" autocomplete="off" value="[%= placeholder %]">
     <label>Hint</label>
     <input type="text" name="hint" placeholder="" autocomplete="off" value="[%= hint %]">
+  </fieldset>
+</template>
+
+
+<template id="tmpl-separator-structure">
+  <fieldset>
+    <hr>
+    <span class="right pointer" data-purpose="remove">X</span>
+    <h3>Separator</h3>
+    <label>Separator Title</label>
+    <input type="text" name="title" placeholder="" autocomplete="off" value="[%= title %]">
   </fieldset>
 </template>
 
@@ -686,6 +700,11 @@
     <input type="text" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off" value="[%= value %]">
     <p class="hint small">[%= hint %]</p>
   </fieldset>
+</template>
+
+
+<template id="tmpl-separator">
+  <h2 class="separator">[%= title %]</h2>
 </template>
 
 
