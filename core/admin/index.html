@@ -494,6 +494,7 @@
     }).bind('ajaxComplete', function() {
       H.loadingbar.dec();
     }).bind('ajaxError', function() {
+      H.loadingbar.dec();
       alert('Sorry, something went wrong with the AJAX request.');
     });  
 
