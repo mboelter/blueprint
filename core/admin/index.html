@@ -49,17 +49,24 @@
         padding-left: 0;
       }
       
+      fieldset p.hint {
+        display: none;
+      }
+      
       label {
-        display: block;
+        display: inline-block;
+        width: 30%;
         margin-top: 10px;
         color: #bfbfbf;
+        vertical-align: top;
       }
       
       input[type="text"] {
         padding: 10px;
-        min-width: 100%;
+        width: 69%;
         font-size: 1em;
         border: 1px solid #bfbfbf;
+        margin-bottom: 10px;
       }
       
       input:disabled {
@@ -68,14 +75,19 @@
       
       textarea {
         padding: 10px;
-        min-width: 100%;
+        width: 69%;
         font-size: 0.8em;
         line-height: 1.5em;
         border: 1px solid #bfbfbf;
         font-family: serif;
         min-height: 200px;
+        margin-bottom: 10px;
       }
       
+      .image-object-label-ref {
+        width: 69%;
+        display: inline-block;
+      }
 
       button.btn {
         font-size: 1em;
@@ -289,18 +301,20 @@
       
       
       table.relationship-assignments {
-        width: 80%;
+        width: 69%;
+        display: inline-block;
       }
 
       table.relationship-assignments td {
         width: 50%;
         vertical-align: top;  
-        border: 1px dashed #eee;
+        border: 1px solid #bfbfbf;
         overflow-y: auto;
       }
 
       table.relationship-assignments th {
         text-align: left;
+        border: none;
       }
 
       table.relationship-assignments ul {
@@ -361,9 +375,11 @@
       }
       
       .CodeMirror.cm-s-default {
-        outline: 1px solid black;
+        outline: 1px solid #bfbfbf;
         padding: 10px;
-        max-width: 100%;
+        width: 69%;
+        display: inline-block;
+        box-sizing: border-box; 
       }
       
       #loadingbar {
@@ -526,10 +542,10 @@
     <fieldset>
       <label>Content Type Name</label>
       <input type="text" name="entity-title" autofocus autocomplete="off" value="[%= title %]">
-      <p class="small">(Name of a single item, e.g. Template)</p>
+      <p class="hint small">(Name of a single item, e.g. Template)</p>
       <label>Collection Name</label>
       <input type="text" name="collection-title" autofocus autocomplete="off" value="[%= collectionTitle %]">
-      <p class="small">(Collection name holding all items, e.g. Templates)</p>
+      <p class="hint small">(Collection name holding all items, e.g. Templates)</p>
     </fieldset>
   
     <h2>Fields</h2>
@@ -668,7 +684,7 @@
   <fieldset>
     <label>[%= title %]</label>
     <input type="text" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off" value="[%= value %]">
-    <p class="small">[%= hint %]</p>
+    <p class="hint small">[%= hint %]</p>
   </fieldset>
 </template>
 
@@ -677,7 +693,7 @@
   <fieldset>
     <label>[%= title %]</label>
     <textarea name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off">[%= value %]</textarea>
-    <p class="small">[%= hint %]</p>
+    <p class="hint small">[%= hint %]</p>
   </fieldset>
 </template>
 
@@ -686,7 +702,7 @@
   <fieldset>
     <label>[%= title %]</label>
     <textarea class="wysiwyg" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off">[%= value %]</textarea>
-    <p class="small">[%= hint %]</p>
+    <p class="hint small">[%= hint %]</p>
   </fieldset>
 </template>
 
@@ -695,7 +711,7 @@
   <fieldset>
     <label>[%= title %]</label>
     <textarea class="markdown" name="[%= title %]" placeholder="[%= placeholder %]" autocomplete="off">[%= value %]</textarea>
-    <p class="small">[%= hint %]</p>
+    <p class="hint small">[%= hint %]</p>
   </fieldset>
 </template>
 
@@ -703,10 +719,12 @@
 <template id="tmpl-image-object">
   <fieldset>
     <label>[%= title %]</label>
-    <div class="image-grid"></div>
-    <div style="clear: both;"></div>
-    <button data-role="add-image" class="btn btn-secondary">Add Image</button>
-    <p class="small">[%= hint %]</p>
+    <div class="image-object-label-ref">
+      <div class="image-grid"></div>
+      <div style="clear: both;"></div>
+      <button data-role="add-image" class="btn btn-secondary">Add Image</button>
+      <p class="hint small">[%= hint %]</p>
+    </div>  
   </fieldset>
 </template>
 
@@ -716,12 +734,12 @@
     <label>[%= title %]</label>
     <table class="relationship-assignments">
       <tr>
-        <td>
+        <th>
           <input type="search" placeholder="Search" data-purpose="search">
-        </td>
-        <td>
+        </th>
+        <th>
           <!-- Nothing here -->
-        </td>
+        </th>
       </tr>
       <tr>
         <td>
