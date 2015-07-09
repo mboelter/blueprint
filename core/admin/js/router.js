@@ -37,6 +37,11 @@ Router = function() {
       } else {
         window.history.back();
       }
+    } else if (/^\/entity\/.+\/changeOrder$/.test(hash)) {
+      var slug = hash.split('/')[2];
+      self.load('_entity_change_order.html', function() {
+        EntityController.changeOrder(slug);
+      });
     } else if (/^\/entity\/.+/.test(hash)) {
       var slug = hash.split('/')[2];
       self.load('_entity.html', function() {

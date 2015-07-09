@@ -42,6 +42,7 @@ EntityStructure.prototype = {
     var html = new EJS({element: 'tmpl-entity'}).render({
       title: self.title,
       collectionTitle: self.collectionTitle,
+      slug: self._slug,
     });
 
     return $(html);
