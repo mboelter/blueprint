@@ -116,6 +116,11 @@
         background-color: #2C9BE6;
         color: #fff;
       }
+      
+      button.btn.btn-secondary:disabled {
+        background-color: #ccc;
+        color: #999;
+      }
 
 
       button[type="submit"] {
@@ -664,6 +669,8 @@
     <input type="text" name="name" placeholder="" autocomplete="off" value="[%= name %]">
     <label>Hint</label>
     <input type="text" name="hint" placeholder="" autocomplete="off" value="[%= hint %]">
+    <label>Max Images</label>
+    <input type="text" name="max-images" placeholder="" autocomplete="off" value="[%= max_images %]">
   </fieldset>
 </template>
 

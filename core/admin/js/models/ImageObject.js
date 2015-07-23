@@ -7,7 +7,8 @@ var ImageObject = function(json, data_json) {
   this.placeholder = json.placeholder || '';
   this.hint = json.hint || '';
   this.value = data_json[json.name] || [];
-  
+  this.max_images = json.max_images || '';
+
   this.$el = this.createEl();
   this.bind();
 };
@@ -21,6 +22,7 @@ ImageObject.prototype = {
       title: this.title,
       hint: this.hint,
       value: this.value,
+      max_images: this.max_images,
     });
 
     this.value.forEach(function(image_ref) {
@@ -35,9 +37,26 @@ ImageObject.prototype = {
   },
 
 
+  checkMaxImages: function() {
+    var self = this,
+        maxImagesNum = parseInt(self.max_images, 10);
+
+    console.log(maxImagesNum, self.max_images, self.value, self.value.length);
+
+    if (maxImagesNum !== NaN && maxImagesNum != 0 && self.value.length >= maxImagesNum) {
+      this.$el.find('*[data-role="add-image"]').attr('disabled', 'disabled');      
+      console.log('add img disabled!');
+    } else {
+      this.$el.find('*[data-role="add-image"]').removeAttr('disabled');      
+      console.log('add img enabled!');
+    }
+  },
+
   bind: function() {
     var self = this;
     
+    this.checkMaxImages();
+
     this.$el.find('*[data-role="add-image"]').click(function() {
       var popup = new Popup(),
           imagePicker = new ImagePicker();
@@ -72,7 +91,7 @@ ImageObject.prototype = {
           }, 
         }),
         $imageHtml = $(imageHtml);
-
+        
     if (image) {
       $imageHtml.data('json', image);
     } else {
@@ -101,9 +120,11 @@ ImageObject.prototype = {
 
       self.removeImageById($imageGridItem.data('json')._id);
       $imageGridItem.remove();
+      self.checkMaxImages();
     });
     
     this.$el.find('.image-grid').append($imageHtml);
+    this.checkMaxImages();
   },
   
   

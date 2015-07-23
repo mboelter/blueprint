@@ -1,3 +1,7 @@
+/* global H */
+/* global $ */
+/* global EJS */
+
 var ImageStructure = function(json) {
   this.type = 'image';
   json = json || {};
@@ -5,6 +9,7 @@ var ImageStructure = function(json) {
   this.title = json.title || '';
   this.name = json.name || '';
   this.hint = json.hint || '';
+  this.max_images = json.max_images || '';
   this.onRemoveCallback = undefined;
 
   this.$el = this.createEl();
@@ -18,6 +23,7 @@ ImageStructure.prototype = {
       title: this.title,
       name: this.name,
       hint: this.hint,
+      max_images: this.max_images,
     });
     return $(html);
   },
@@ -44,6 +50,10 @@ ImageStructure.prototype = {
     this.$el.find('input[name="hint"]').keyup(function() {
       self.hint = $(this).val();
     });
+
+    this.$el.find('input[name="max-images"]').keyup(function() {
+      self.max_images = $(this).val();
+    });
     
     this.$el.find('*[data-purpose="remove"]').click(function() {
       if (self.onRemoveCallback) { self.onRemoveCallback(); }
@@ -57,6 +67,7 @@ ImageStructure.prototype = {
       title: this.title,
       name: this.name,
       hint: this.hint,
+      max_images: this.max_images,
     };
   },
   
