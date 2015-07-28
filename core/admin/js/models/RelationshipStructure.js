@@ -1,3 +1,6 @@
+/* global H */
+/* global EJS */
+/* global $ */
 var RelationshipStructure = function(json) {
   var self = this;
   
