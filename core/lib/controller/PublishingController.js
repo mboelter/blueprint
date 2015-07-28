@@ -6,17 +6,16 @@ var DB = require('../db.js'),
 
 var resolve_references = function(items, depth) {
   depth = depth || 0;
-  depth++;
   
   // some safeguard for circular references.
-  if (depth == 10) {
+  if (depth == 15) {
     console.log('WARNING: PublishingController.resolve_references(): Depth too deep, not resolving anymore.');
     return items;
   }
   
   if (Array.isArray(items)) {
     items = items.map(function(item) {
-      return resolve_references(item, depth);
+      return resolve_references(item, depth + 1);
     });
     
     // Sanitize:
@@ -24,7 +23,6 @@ var resolve_references = function(items, depth) {
     // they would look like null orr undefined as an element in the array.
     items = items.filter(function(item) {
       if (item) { return true; }
-
       return false;
     });
     
@@ -35,10 +33,10 @@ var resolve_references = function(items, depth) {
 
   for (var key in item) {
     if (Array.isArray(item[key])) {
-      item[key] = resolve_references(item[key], depth);
+      item[key] = resolve_references(item[key], depth + 1);
     } else if (key == '_ref') {
       var resolved_ref = new DB(item[key]._collection_slug).findById(item[key]._item_id);
-      item = resolve_references(resolved_ref, depth);
+      item = resolve_references(resolved_ref, depth + 1);
     }
   };
   
