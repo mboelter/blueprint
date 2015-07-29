@@ -5,7 +5,7 @@
 
 JsonApiController = {
   list: function() {
-    $.getJSON('/json/entities', function(entities) {
+    H.getJSON('/json/entities', function(entities) {
       entities.forEach(function(entity) {
         var endpointHtml = new EJS({element: 'tmpl-json-endpoint-list-item'}).render({entity: entity}),
             optionHtml = '<option value="' + entity._slug + '">' + entity.title + '</option>';
@@ -43,7 +43,7 @@ JsonApiController = {
       
       $url.val(url);
       
-      $.getJSON(url, function(json) {
+      H.getJSON(url, function(json) {
         var result = JSON.stringify(json); 
         result = js_beautify(result);
         $result.val(result);       

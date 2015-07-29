@@ -27,7 +27,7 @@ Relationship.prototype = {
     
     console.log('need to fetch items for: ', this.collection_slug);
 
-    $.getJSON('/json/collection/' + this.collection_slug, function(collection) {
+    H.getJSON('/json/collection/' + this.collection_slug, function(collection) {
       collection = H.sortArrayByObjectProperty(collection, 'title');
       
       collection.forEach(function(collection_item) {

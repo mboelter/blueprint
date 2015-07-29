@@ -2,7 +2,7 @@
 
 EntityController = {
   list: function() {
-    $.getJSON('/json/entities', function(entities) {
+    H.getJSON('/json/entities', function(entities) {
       new EJS({element: 'tmpl-entity-list-items'}).update('entity-list', {entities: entities});
       
       $('*[data-purpose="add-new"]').click(function() {
@@ -12,7 +12,7 @@ EntityController = {
   },
   
   edit: function(slug) {
-    $.getJSON('/json/entity/' + slug, function(entity) {
+    H.getJSON('/json/entity/' + slug, function(entity) {
       var entity = new EntityStructure(entity);
       $('#entity').html(entity.$el);
     });
@@ -27,7 +27,7 @@ EntityController = {
   changeOrder: function(slug) {
     var self = this;
     
-    $.getJSON('/json/entity/' + slug, function(entity) {
+    H.getJSON('/json/entity/' + slug, function(entity) {
       var fieldTitles = [];
       
       entity.fields.forEach(function(field, i) {

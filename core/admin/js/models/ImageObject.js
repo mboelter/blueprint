@@ -28,7 +28,7 @@ ImageObject.prototype = {
     this.value.forEach(function(image_ref) {
       var ref = image_ref._ref;
       
-      $.getJSON('/json/image/' + ref._item_id, function(image) {
+      H.getJSON('/json/image/' + ref._item_id, function(image) {
         self.addImageToImageGrid(image, ref._item_id);
       });
     });

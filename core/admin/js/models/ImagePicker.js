@@ -26,7 +26,7 @@ ImagePicker.prototype = {
       return false;
     });
   
-    $.getJSON('/json/images', function(images) {
+    H.getJSON('/json/images', function(images) {
       images.forEach(function(image) {
         self.addImage(image);
       });

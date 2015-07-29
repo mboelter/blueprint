@@ -14,7 +14,7 @@ ImageController = {
       return false;
     });
     
-    $.getJSON('/json/images', function(images) {
+    H.getJSON('/json/images', function(images) {
       images.forEach(function(image) {
         ImageController._addImage(image);
       });
@@ -40,7 +40,7 @@ ImageController = {
             imageId = $imageGridItem.data('json')._id;
         
         $imageGridItem.remove();
-        $.getJSON('/json/image/' + imageId + '/delete', function() {
+        H.getJSON('/json/image/' + imageId + '/delete', function() {
           // has been deleted now;
         });
       };

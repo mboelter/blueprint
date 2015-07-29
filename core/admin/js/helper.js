@@ -12,7 +12,15 @@ H = {
     return s.toLowerCase().replace(/ /g,'_').replace(/[^\w-]+/g,'');
   },
   
+  
+  getJSON: function(url, callback) {
+    JSONCache.getJSON(url, callback);
+  },
+  
+  
   postJSON: function(url, data, successCallback) {
+    JSONCache.invalidate();
+    
     $.ajax(url, {
       data: JSON.stringify(data),
       contentType: 'application/json',

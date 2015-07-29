@@ -16,7 +16,7 @@ Router = function() {
     
     if (hash == '') {
       self.load('_dashboard.html', function() {
-        $.getJSON('/json/entities', function(entities) {
+        H.getJSON('/json/entities', function(entities) {
           new EJS({element: 'tmpl-dashboard-entity-list'}).update('dashboard-collections', {entities: entities});
         });        
       });
@@ -31,7 +31,7 @@ Router = function() {
     } else if (/^\/entity\/.+\/delete$/.test(hash)) {
       var slug = hash.split('/')[2];
       if (confirm('Are you sure to delete "' + slug + '" and ALL items in "' + slug + '"?')) {
-        $.getJSON('/json/entity/' + slug + '/delete', function() {
+        H.getJSON('/json/entity/' + slug + '/delete', function() {
           window.history.back();
         });
       } else {
@@ -59,7 +59,7 @@ Router = function() {
           collection_item_id = hash.split('/')[4];
           
       if (confirm('Are you sure?')) {
-        $.getJSON('/json/collection/' + collection_slug + '/delete/' + collection_item_id, function() {
+        H.getJSON('/json/collection/' + collection_slug + '/delete/' + collection_item_id, function() {
           window.history.back();
         });
       } else {

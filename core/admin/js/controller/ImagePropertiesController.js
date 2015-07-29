@@ -17,7 +17,7 @@ ImagePropertiesController = {
     this.bind();
 
     // fetch data
-    $.getJSON('/json/image/' + imageId, function(json) {
+    H.getJSON('/json/image/' + imageId, function(json) {
       self._imageJSON = json;
       self._imageJSON.alt_text = json.alt_text || '';
       self._imageJSON.caption = json.caption || '';

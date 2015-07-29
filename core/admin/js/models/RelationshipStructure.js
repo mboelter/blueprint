@@ -16,7 +16,7 @@ var RelationshipStructure = function(json) {
 
   this.$el = this.createEl();
 
-  $.getJSON('/json/entities', function(entities) {
+  H.getJSON('/json/entities', function(entities) {
     self.$el.find('select[name="entity"]').append('<option value="__please_select__">-- Please Select --</option>');
 
     entities.forEach(function(entity) {

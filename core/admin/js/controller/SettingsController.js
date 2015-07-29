@@ -10,7 +10,7 @@ SettingsController = {
   init: function() {
     var self = this;
       
-    $.getJSON('/admin/bp-settings.json', function(settings) {
+    H.getJSON('/admin/bp-settings.json', function(settings) {
       var settingsStr = js_beautify(JSON.stringify(settings));
       
       // populate textfield with settings.json to be used by CodeMirror
