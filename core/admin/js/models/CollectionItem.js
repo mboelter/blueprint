@@ -53,6 +53,32 @@ CollectionItem.prototype = {
     });
 
 
+    this.$el.find('button[data-purpose="save-and-add-another"]').click(function() {
+      if (self._id) {
+        // update & redirect to new
+        H.postJSON('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
+          window.location.href = '#/collection/' + self._collection_slug + '/new';
+          $(window).trigger('hashchange');
+          
+          setTimeout(function() {
+            var toast = new Toast('Saved.');
+          }, 200);
+        });
+      } else {
+        // create
+        H.postJSON('/json/collection/' + self._collection_slug, self.toJSON(), function(item) {
+          // redirect to new              
+          window.location.href = '#/collection/' + self._collection_slug + '/new';
+          $(window).trigger('hashchange');
+          
+          setTimeout(function() {
+            var toast = new Toast('Saved.');
+          }, 200);
+        });
+      }
+    });
+
+
     this.$el.find('button[data-purpose="save-and-publish"]').click(function() {
       if (self._id) {
         H.postJSON('/json/collection/' + self._collection_slug + '/' + self._id, self.toJSON(), function() {
