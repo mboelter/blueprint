@@ -9,7 +9,6 @@ JSONCache = {
     var self = this;
     
     if (this.hasItem(url)) {
-      console.log('JSONCache: hit -> callback', this._cache[url]);
       callback(this._cache[url]);
     } else if (this.isInProgress(url)) {
       this._inProgress[url].push(callback);

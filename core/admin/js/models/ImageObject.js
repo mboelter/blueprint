@@ -29,7 +29,13 @@ ImageObject.prototype = {
       var ref = image_ref._ref;
       
       H.getJSON('/json/image/' + ref._item_id, function(image) {
-        self.addImageToImageGrid(image, ref._item_id);
+        // FIXME
+        // dependency problem, dirty hack for now.
+        // at this stage, addImageToGrid is relying on $el, which possibly doesn't exist yet.
+        
+        setTimeout(function() {
+          self.addImageToImageGrid(image, ref._item_id);
+        }, 200);
       });
     });
 
