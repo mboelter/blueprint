@@ -86,6 +86,14 @@ exports.publish = function(req, res) {
 };
 
 
+exports.publishedContentTypes = function(req, res) {
+  var Entity = new DB('Entity'),
+      entities = Entity.findAll();
+
+  res.json(entities);
+};
+
+
 exports.publishedAll = function(req, res) {
   var published = {},
       Entity = new DB('Entity'),

@@ -66,6 +66,7 @@ app.post('/json/image/:image_id/update', ImageAdminController.json_update_by_id)
 app.get('/admin/publish', PublishingController.publish);
 app.get('/admin/publish/download', PublishingController.downloadAsZip);
 app.get('/json/published/all', PublishingController.publishedAll);
+app.get('/json/published/ContentTypes', PublishingController.publishedContentTypes);
 app.get('/json/published/:collection_slug', PublishingController.publishedCollection);
 
 app.use('/admin/images', express.static(__dirname + '/bp-content/images'));
