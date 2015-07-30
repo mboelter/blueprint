@@ -43,10 +43,13 @@ Relationship.prototype = {
         return result;
       });
       
-      // bind/populate select2
-      self.$el.find('.select2-array').select2({
-        data: collection
-      });
+      // give EJS some time to render to the DOM before binding
+      setTimeout(function() {
+        // bind/populate select2
+        self.$el.find('.select2-array').select2({
+          data: collection
+        });
+      }, 200);
     }); // H.getJSON()
   },
 
