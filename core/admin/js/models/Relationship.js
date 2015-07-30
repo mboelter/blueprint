@@ -9,7 +9,6 @@ var Relationship = function(json, data_json) {
   this.value = data_json[json.name] || [];
   
   this.createEl();
-  this.bind();
 };
 
 
@@ -30,55 +29,31 @@ Relationship.prototype = {
     H.getJSON('/json/collection/' + this.collection_slug, function(collection) {
       collection = H.sortArrayByObjectProperty(collection, 'title');
       
-      collection.forEach(function(collection_item) {
-        var $li = $('<li>' + collection_item.title + '</li>');
-        $li.data('collection_item_id', collection_item._id);
+      // map to a obj that select2 can consume
+      collection = collection.map(function(item) {
+        var result = {};
         
-        if (self.isSelected(collection_item)) {
-          self.$el.find('ul[data-purpose="selected-list"]').append($li);
-        } else {
-          self.$el.find('ul[data-purpose="candidate-list"]').append($li);
+        result.id = item._id;
+        result.text = item.title;
+        
+        if (self.isSelected(item)) {
+          result.selected = 'selected';        
         }
+        
+        return result;
       });
-    });
-
+      
+      // bind/populate select2
+      self.$el.find('.select2-array').select2({
+        data: collection
+      });
+    }); // H.getJSON()
   },
 
 
-  bind: function() {
-    var self = this;
-    
-    this.$el.find('input[data-purpose="search"]').on('keyup click', function() {
-      var $this = $(this);
-      
-      setTimeout(function() { // need setTimeout to capture the content AFTER keypress, otherwise one character missing
-        var q = $this.val();
-        self.filter(q);
-      }, 50);
-    });
-
-    this.$el.find('ul[data-purpose="candidate-list"]').click(function(e) {
-      var $li = $(e.target),
-          collection_item_id = $li.data('collection_item_id');
-      
-      self._addReference(collection_item_id);
-      $li.appendTo(self.$el.find('ul[data-purpose="selected-list"]'));
-    });
-
-    this.$el.find('ul[data-purpose="selected-list"]').click(function(e) {
-      var $li = $(e.target),
-          collection_item_id = $li.data('collection_item_id');
-
-
-      self._removeReference(collection_item_id);
-      $li.appendTo(self.$el.find('ul[data-purpose="candidate-list"]'));
-    });
-  },
   
   isSelected: function(collection_item) {
-    var selectedList = [],
-        candidateList = [],
-        isSelected = false;
+    var isSelected = false;
         
     this.value.forEach(function(ref) {
       if (ref._ref._item_id == collection_item._id) {
@@ -89,54 +64,21 @@ Relationship.prototype = {
     return isSelected; 
   },
   
-  
-  _addReference: function(collection_item_id) {
-    this.value.push({
-      _ref: {
-        _collection_slug: this.collection_slug,
-        _item_id: collection_item_id,
-      }
-    });
-  },
-  
-  
-  _removeReference: function(collection_item_id) {
-    this.value = this.value.filter(function(ref) {
-      if (collection_item_id == ref._ref._item_id) {
-        return false;
-      }
-      
-      return true;
-    });
-  },
-  
-  
-  filter: function(q) {
-    var $listItems =  this.$el.find('ul[data-purpose="candidate-list"] li');
     
-    q = q.trim();
-    
-    if (q.trim() == '') {
-      $listItems.show();
-      return;
-    }
-    
-    var regex = new RegExp('.*' + q + '.*', 'i');
-    
-    $listItems.each(function(i, li) {
-      var $li = $(li);
-
-      if ($li.text().match(regex)) {
-        $li.show();
-      } else {
-        $li.hide();
-      }
-    });
-  },
-
-  
-  
   toJSON: function() {
+    var self = this;
+    
+    self.value = [];  
+    
+    this.$el.find('.select2-array').val().forEach(function(id) {
+      self.value.push({
+        _ref: {
+          _collection_slug: self.collection_slug,
+          _item_id: id,
+        }
+      });
+    });
+        
     return {
       name: this.name,
       value: this.value,

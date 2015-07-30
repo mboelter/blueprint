@@ -73,6 +73,10 @@
         color: #ccc;
       }
       
+      select {
+        width: 69%;
+      }
+      
       textarea {
         padding: 10px;
         width: 69%;
@@ -419,6 +423,7 @@
     </style>
     
     <link rel="stylesheet" href="js/lib/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="js/lib/select2/dist/css/select2.min.css">
   </head>
   
   <body>
@@ -458,6 +463,7 @@
   <script src="js/lib/codemirror/mode/javascript/javascript.js"></script>
   <script src="js/lib/codemirror/addon/edit/continuelist.js"></script>  
   <script src="js/lib/beautify.js"></script>  
+  <script src="js/lib/select2/dist/js/select2.full.min.js"></script>
 
   <script src="js/JSONCache.js"></script>  
   <script src="js/models/EntityStructure.js"></script>  
@@ -763,24 +769,7 @@
 <template id="tmpl-relationship">
   <fieldset>
     <label>[%= title %]</label>
-    <table class="relationship-assignments">
-      <tr>
-        <th>
-          <input type="search" placeholder="Search" data-purpose="search">
-        </th>
-        <th>
-          <!-- Nothing here -->
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <ul data-purpose="candidate-list"></ul>
-        </td>
-        <td>
-          <ul data-purpose="selected-list"></ul>
-        </td>
-      </tr>
-    </table>
+    <select class="select2-array" multiple="multiple"></select>
   </fieldset>
 </template>
 
