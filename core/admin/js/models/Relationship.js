@@ -73,14 +73,18 @@ Relationship.prototype = {
     
     self.value = [];  
     
-    this.$el.find('.select2-array').val().forEach(function(id) {
-      self.value.push({
-        _ref: {
-          _collection_slug: self.collection_slug,
-          _item_id: id,
-        }
+    var values =  self.$el.find('.select2-array').val();
+        
+    if(values != null) {
+      values.forEach(function(id) {
+        self.value.push({
+          _ref: {
+            _collection_slug: self.collection_slug,
+            _item_id: id,
+          }
+        });
       });
-    });
+    }
         
     return {
       name: this.name,
